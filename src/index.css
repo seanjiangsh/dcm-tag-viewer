@@ -1,0 +1,16 @@
+* {
+  /* iOS stop context menu */
+  -webkit-touch-callout: none;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  position: fixed;
+  overflow: hidden;
+}
+
+#root {
+  width: 100dvw;
+  height: 100dvh;
+}
