@@ -44,7 +44,7 @@ const clearSnackbar = (state: LayoutTypes.LayoutState) => {
   state.snackbar = { opened: false, level, msg: "" };
 };
 
-const LayoutSlice = createSlice({
+const layoutSlice = createSlice({
   name: "layout",
   initialState: structuredClone(initLayoutState),
   reducers: {
@@ -58,5 +58,5 @@ const LayoutSlice = createSlice({
 });
 
 export const selectLayout = (state: RootState) => state.layout;
-export const layoutActions = LayoutSlice.actions;
-export default LayoutSlice.reducer;
+export const layoutActions = layoutSlice.actions;
+export const layoutReducer = layoutSlice.reducer;

@@ -7,7 +7,7 @@ import {
 } from "@reduxjs/toolkit";
 import { createLogger } from "redux-logger";
 
-import layoutReducer from "@redux/layout/reducer";
+import { layoutReducer } from "@redux/layout/reducer";
 
 const logger = createLogger({ duration: true, collapsed: true });
 const middlewares: Array<Middleware> = import.meta.env.DEV ? [logger] : [];

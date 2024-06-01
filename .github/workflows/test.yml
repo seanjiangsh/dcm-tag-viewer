@@ -1,0 +1,36 @@
+name: Test Workflow
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "latest"
+
+      - name: Install packages
+        run: npm install
+
+      - name: Run tests
+        run: npm run test
+
+      - name: Archive Cypress Snapshots
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: cypress-snapshots
+          path: client/cypress/snapshots
+
+      - name: Update Coverage Badge
+        if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+        uses: we-cli/coverage-badge-action@main

@@ -13,7 +13,7 @@ const MainStyle = {
   height: `calc(100% - ${appBarHeight}px)`,
   display: "flex",
   flexDirection: "row",
-  p: 1,
+  p: 0.5,
 } as const;
 
 export default function Main() {
@@ -22,5 +22,9 @@ export default function Main() {
   // TODO: shouldShowSR by SR is true and SR switch is true
   const table = isSR ? <SRTable /> : <TagTable />;
   const main = fileData ? table : <FileDrop />;
-  return <Paper sx={MainStyle}>{main}</Paper>;
+  return (
+    <Paper id="Main" sx={MainStyle}>
+      {main}
+    </Paper>
+  );
 }

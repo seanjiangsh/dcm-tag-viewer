@@ -7,8 +7,12 @@
     "dev": "vite --host",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "deploy": "npm run build && arc deploy --production",
-    "destroy": "arc destroy --app dcm-tag-viewer --production --force"
+    "cy": "start-test dev 5173 'cypress open'",
+    "cy:unit": "cypress run --component",
+    "cy:e2e": "start-test dev 5173 'cypress run --e2e'",
+    "test": "npm run cy:unit && npm run cy:e2e",
+    "arc:deploy": "npm run build && arc deploy --production",
+    "arc:destroy": "arc destroy --app dcm-tag-viewer --production --force"
   },
   "dependencies": {
     "@emotion/react": "11.11.4",
@@ -33,6 +37,7 @@
   },
   "devDependencies": {
     "@architect/architect": "^11.0.12",
+    "@cypress/code-coverage": "^3.12.39",
     "@types/deep-diff": "1.0.5",
     "@types/node": "20.12.12",
     "@types/react": "^18.0.28",
@@ -41,7 +46,10 @@
     "@types/redux-logger": "3.0.13",
     "@types/throttle-debounce": "^5.0.2",
     "@vitejs/plugin-react": "4.3.0",
+    "cypress": "^13.10.0",
+    "start-server-and-test": "^2.0.3",
     "typescript": "5.4.5",
-    "vite": "5.2.11"
+    "vite": "5.2.11",
+    "vite-plugin-istanbul": "^6.0.2"
   }
 }

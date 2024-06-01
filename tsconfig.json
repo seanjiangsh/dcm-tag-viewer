@@ -26,6 +26,6 @@
       "@componentUtils/*": ["components/utils/*"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "cypress/cypress.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

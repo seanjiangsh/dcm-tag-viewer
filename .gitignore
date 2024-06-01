@@ -23,3 +23,8 @@ dev
 *.njsproj
 *.sln
 *.sw?
+
+# testing
+cypress/screenshots
+coverage
+.nyc_output

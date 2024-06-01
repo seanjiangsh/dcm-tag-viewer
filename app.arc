@@ -8,3 +8,8 @@ region ap-northeast-1
 folder dist
 spa true
 prune true
+
+@http
+/api/*
+  method get
+  src /api
