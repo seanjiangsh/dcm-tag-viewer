@@ -1,5 +1,5 @@
 {
-  "reporter": ["html"],
+  "reporter": ["html", "json-summary"],
   "include": ["src"],
   "exclude": ["**/*.cy.ts", "**/*.cy.tsx", "**/*.cy.js", "**/*.cy.jsx"]
 }
