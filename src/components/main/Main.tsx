@@ -1,7 +1,7 @@
 import { Paper } from "@mui/material";
 
 import { useSelector } from "@redux/root-hook";
-import { selectFileData, selectIsSR } from "@redux/layout/selectors";
+import { selectFileData, selectShowSR } from "@redux/layout/selectors";
 
 import { appBarHeight } from "@utils/theme";
 
@@ -18,10 +18,10 @@ const MainStyle = {
 
 export default function Main() {
   const fileData = useSelector(selectFileData);
-  const isSR = useSelector(selectIsSR);
-  // TODO: shouldShowSR by SR is true and SR switch is true
-  const table = isSR ? <SRTable /> : <TagTable />;
+  const showSR = useSelector(selectShowSR);
+  const table = showSR ? <SRTable /> : <TagTable />;
   const main = fileData ? table : <FileDrop />;
+
   return (
     <Paper id="Main" sx={MainStyle}>
       {main}

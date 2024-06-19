@@ -7,6 +7,7 @@ export const defaultScreenSize: LayoutTypes.ScreenSize = {
 
 export const initLayoutState: LayoutTypes.LayoutState = {
   screenSize: defaultScreenSize,
-  file: { isSR: false },
   snackbar: { opened: false, level: "info", msg: "" },
+  showSR:false,
+  file: { isSR: false },
 };

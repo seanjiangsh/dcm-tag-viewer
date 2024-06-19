@@ -1,6 +1,6 @@
 import * as AppHooks from "@hooks/App.hooks";
 
-import AppBar from "@components/app-bar/App-bar";
+import AppBar from "@components/app-bar/Appbar";
 import Main from "@components/main/Main";
 import Snackbar from "@components/snackbar/Snackbar";
 

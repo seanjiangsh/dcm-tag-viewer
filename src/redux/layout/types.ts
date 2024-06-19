@@ -6,6 +6,7 @@ export type LayoutState = {
   screenSize: ScreenSize;
   file: File;
   snackbar: { opened: boolean; level: string; msg: string };
+  showSR: boolean;
 };
 
 export type ScreenSize = {

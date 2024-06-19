@@ -21,6 +21,12 @@ const setScreenSize = (
     screenSize.windowSize = newWindowSize;
   }
 };
+const setShowSR = (
+  state: LayoutTypes.LayoutState,
+  action: PayloadAction<boolean>
+) => {
+  state.showSR = action.payload;
+};
 const setFileData = (
   state: LayoutTypes.LayoutState,
   action: PayloadAction<LayoutTypes.File["data"]>
@@ -50,6 +56,7 @@ const layoutSlice = createSlice({
   reducers: {
     resetLayoutState,
     setScreenSize,
+    setShowSR,
     setFileData,
     setIsSR,
     setSnackbar,

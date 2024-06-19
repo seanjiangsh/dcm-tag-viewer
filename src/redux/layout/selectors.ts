@@ -8,6 +8,11 @@ export const selectScreenSize = createSelector(
   (layout) => layout.screenSize
 );
 
+export const selectShowSR = createSelector(
+  selectLayout,
+  (layout) => layout.showSR
+);
+
 export const selectFileData = createSelector(
   selectLayout,
   (layout) => layout.file.data

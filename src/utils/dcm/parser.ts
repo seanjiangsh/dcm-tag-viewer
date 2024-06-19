@@ -9,7 +9,7 @@ export const parseDcm = async (file: File) => {
     const buffer = new Uint8Array(arrayBuffer);
     return dicomParser.parseDicom(buffer);
   } catch (err) {
-    console.error(`Parse dcm failed on file ${file}`, err);
+    console.error(`Parse dcm failed`, err);
   }
 };
 

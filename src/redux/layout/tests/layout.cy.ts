@@ -47,4 +47,11 @@ describe("layout reducer tests", () => {
     const expectedState = { opened: false, level: "info", msg: "" };
     expect(newState.snackbar).to.deep.eq(expectedState);
   });
+
+  it("should set the show SR flag", () => {
+    const showSR = true;
+    const action = layoutActions.setShowSR(showSR);
+    const newState = layoutReducer(initLayoutState, action);
+    expect(newState.showSR).to.deep.eq(showSR);
+  });
 });

@@ -7,7 +7,7 @@ import * as dcmParser from "@utils/dcm/parser";
 
 import { SRDataUtil } from "@components/tree-table/utils";
 
-const { setFileData, setIsSR, setSnackbar } = layoutActions;
+const { setFileData, setIsSR, setShowSR, setSnackbar } = layoutActions;
 
 const PaperStyle = {
   width: "100%",
@@ -56,7 +56,10 @@ export default function FileDrop() {
     const dcmJson = dcmParser.getJson(dataset);
     const isSR = new SRDataUtil(dcmJson).isSR();
     dispatch(setFileData(dcmJson));
-    dispatch(setIsSR(isSR));
+    if (isSR) {
+      dispatch(setIsSR(isSR));
+      dispatch(setShowSR(true));
+    }
   };
 
   return (
