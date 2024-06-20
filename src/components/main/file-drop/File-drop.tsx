@@ -55,6 +55,7 @@ export default function FileDrop() {
 
     const dcmJson = dcmParser.getJson(dataset);
     const isSR = new SRDataUtil(dcmJson).isSR();
+    // console.log(dcmJson);
     dispatch(setFileData(dcmJson));
     if (isSR) {
       dispatch(setIsSR(isSR));

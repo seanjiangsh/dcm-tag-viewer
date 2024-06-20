@@ -2,6 +2,7 @@ import dicomParser, { DataSet, Element } from "dicom-parser";
 
 import { DcmJsonModelObj, PNValue } from "./dcmTypes";
 import { TAG_DICT } from "./dataDictionary";
+import { valueDecode } from "./decoder";
 
 export const parseDcm = async (file: File) => {
   try {
@@ -32,8 +33,7 @@ const getElement = (dataset: DataSet, element: Element): DcmJsonModelObj => {
   const { tag, items } = element;
   const standardTag = `${getTagGroup(tag)}${getTagElement(tag)}`.toUpperCase();
   const vr = getVR(element);
-  const vm = getVM(dataset, element);
-  const Value = items ? getSQValues(items) : getValue(dataset, tag, vr, vm);
+  const Value = items ? getSQValues(items) : getValue(dataset, element);
   const jsonObjVal = Value ? { vr, Value } : { vr };
   return { [standardTag]: jsonObjVal };
 };
@@ -69,8 +69,15 @@ const getSQValue = (item: Element) => {
   return getElements(dataSet, Object.values(dataSet.elements));
 };
 
-const getValue = (dataset: DataSet, tag: string, vr: string, vm: number) => {
+const getValue = (dataset: DataSet, element: Element) => {
+  const { tag } = element;
+  const vr = getVR(element);
+  const vm = getVM(dataset, element);
+  const buffer = dataset.byteArray;
+
   switch (vr) {
+    case "AT":
+      return [dataset.attributeTag(tag)];
     case "OB":
     case "OD":
     case "OF":
@@ -78,18 +85,53 @@ const getValue = (dataset: DataSet, tag: string, vr: string, vm: number) => {
     case "OW":
       return ["(Binary data)"];
     // case "UN":
+    //   return ["(Unknown)"];
 
-    case "DS":
-    case "FD":
-    case "FL":
-    case "IS":
-    case "SL":
-    case "SS":
-    case "UL":
-      return getNumberValues(dataset, tag);
     case "US":
       return Array.from({ length: vm }).reduce<Array<number>>((p, _, i) => {
         const value = dataset.uint16(tag, i);
+        if (value === undefined) return p;
+        return [...p, value];
+      }, []);
+    case "SS":
+      return Array.from({ length: vm }).reduce<Array<number>>((p, _, i) => {
+        const value = dataset.int16(tag, i);
+        if (value === undefined) return p;
+        return [...p, value];
+      }, []);
+    case "UL":
+      return Array.from({ length: vm }).reduce<Array<number>>((p, _, i) => {
+        const value = dataset.uint32(tag, i);
+        if (value === undefined) return p;
+        return [...p, value];
+      }, []);
+    case "SL":
+      return Array.from({ length: vm }).reduce<Array<number>>((p, _, i) => {
+        const value = dataset.int32(tag, i);
+        if (value === undefined) return p;
+        return [...p, value];
+      }, []);
+    case "FL":
+      return Array.from({ length: vm }).reduce<Array<number>>((p, _, i) => {
+        const value = dataset.float(tag, i);
+        if (value === undefined) return p;
+        return [...p, value];
+      }, []);
+    case "FD":
+      return Array.from({ length: vm }).reduce<Array<number>>((p, _, i) => {
+        const value = dataset.double(tag, i);
+        if (value === undefined) return p;
+        return [...p, value];
+      }, []);
+    case "DS":
+      return Array.from({ length: vm }).reduce<Array<number>>((p, _, i) => {
+        const value = dataset.floatString(tag, i);
+        if (value === undefined) return p;
+        return [...p, value];
+      }, []);
+    case "IS":
+      return Array.from({ length: vm }).reduce<Array<number>>((p, _, i) => {
+        const value = dataset.intString(tag, i);
         if (value === undefined) return p;
         return [...p, value];
       }, []);
@@ -97,10 +139,16 @@ const getValue = (dataset: DataSet, tag: string, vr: string, vm: number) => {
     case "SQ":
       // * do nothing, caller should handle recursive structure
       return;
+
+    case "SH":
+    case "LO":
+    case "ST":
+    case "LT":
+    case "UC":
+    case "UT":
+      return valueDecode(dataset, element, vr);
     case "PN": {
-      const value = dataset.string(tag);
-      if (!value) return;
-      const values = value.split("=");
+      const values = valueDecode(dataset, element, vr);
       const Alphabetic = values?.[0];
       const Ideographic = values?.[1];
       const Phonetic = values?.[2];
@@ -119,9 +167,3 @@ const getValue = (dataset: DataSet, tag: string, vr: string, vm: number) => {
     }
   }
 };
-
-const getNumberValues = (dataset: DataSet, tag: string) =>
-  dataset
-    .string(tag)
-    ?.split("\\")
-    .map((v) => Number(v));
