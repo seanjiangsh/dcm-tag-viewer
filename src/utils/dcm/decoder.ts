@@ -90,7 +90,7 @@ const toHexString = (buffer: Uint8Array) =>
 
 const clearStringEscape = (str: string) => {
   const buffer = new TextEncoder().encode(str);
-  console.log("clearStringEscape", toHexString(buffer));
+  // console.log("clearStringEscape", toHexString(buffer));
   const { length } = buffer;
   let tmp: Array<number> = [];
   for (let i = 0; i < length; i++) {

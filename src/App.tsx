@@ -2,6 +2,7 @@ import * as AppHooks from "@hooks/App.hooks";
 
 import AppBar from "@components/app-bar/Appbar";
 import Main from "@components/main/Main";
+import Drawer from "@components/drawer/Drawer";
 import Snackbar from "@components/snackbar/Snackbar";
 
 const ContainerStyle = {
@@ -18,6 +19,7 @@ export default function App() {
     <div style={ContainerStyle}>
       <AppBar />
       <Main />
+      <Drawer />
       <Snackbar />
     </div>
   );

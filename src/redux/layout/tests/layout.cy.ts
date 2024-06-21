@@ -26,11 +26,25 @@ describe("layout reducer tests", () => {
     expect(newState.file.data).to.deep.eq(mockData);
   });
 
-  it("should set the SR flag", () => {
+  it("should set the file is SR flag", () => {
     const isSR = true;
     const action = layoutActions.setIsSR(isSR);
     const newState = layoutReducer(initLayoutState, action);
     expect(newState.file.isSR).to.deep.eq(isSR);
+  });
+
+  it("should set the show SR flag", () => {
+    const showSR = true;
+    const action = layoutActions.setShowSR(showSR);
+    const newState = layoutReducer(initLayoutState, action);
+    expect(newState.showSR).to.deep.eq(showSR);
+  });
+
+  it("should set the drawer opened flag", () => {
+    const opened = true;
+    const action = layoutActions.setDrawerOpened(opened);
+    const newState = layoutReducer(initLayoutState, action);
+    expect(newState.drawer.opened).to.deep.eq(opened);
   });
 
   it("should set the snackbar", () => {
@@ -46,12 +60,5 @@ describe("layout reducer tests", () => {
     const newState = layoutReducer({ ...initLayoutState, snackbar }, action);
     const expectedState = { opened: false, level: "info", msg: "" };
     expect(newState.snackbar).to.deep.eq(expectedState);
-  });
-
-  it("should set the show SR flag", () => {
-    const showSR = true;
-    const action = layoutActions.setShowSR(showSR);
-    const newState = layoutReducer(initLayoutState, action);
-    expect(newState.showSR).to.deep.eq(showSR);
   });
 });

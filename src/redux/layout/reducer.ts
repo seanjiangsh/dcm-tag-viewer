@@ -21,12 +21,6 @@ const setScreenSize = (
     screenSize.windowSize = newWindowSize;
   }
 };
-const setShowSR = (
-  state: LayoutTypes.LayoutState,
-  action: PayloadAction<boolean>
-) => {
-  state.showSR = action.payload;
-};
 const setFileData = (
   state: LayoutTypes.LayoutState,
   action: PayloadAction<LayoutTypes.File["data"]>
@@ -38,6 +32,18 @@ const setIsSR = (
   action: PayloadAction<boolean>
 ) => {
   state.file.isSR = action.payload;
+};
+const setShowSR = (
+  state: LayoutTypes.LayoutState,
+  action: PayloadAction<boolean>
+) => {
+  state.showSR = action.payload;
+};
+const setDrawerOpened = (
+  state: LayoutTypes.LayoutState,
+  action: PayloadAction<boolean>
+) => {
+  state.drawer.opened = action.payload;
 };
 const setSnackbar = (
   state: LayoutTypes.LayoutState,
@@ -56,9 +62,10 @@ const layoutSlice = createSlice({
   reducers: {
     resetLayoutState,
     setScreenSize,
-    setShowSR,
     setFileData,
     setIsSR,
+    setShowSR,
+    setDrawerOpened,
     setSnackbar,
     clearSnackbar,
   },

@@ -5,8 +5,9 @@ import { DcmJsonModelObj } from "@utils/dcm/dcmTypes";
 export type LayoutState = {
   screenSize: ScreenSize;
   file: File;
-  snackbar: { opened: boolean; level: string; msg: string };
   showSR: boolean;
+  drawer: Drawer;
+  snackbar: { opened: boolean; level: string; msg: string };
 };
 
 export type ScreenSize = {
@@ -28,6 +29,10 @@ export type Responsive = {
 export type File = {
   data?: DcmJsonModelObj;
   isSR: boolean;
+};
+
+export type Drawer = {
+  opened: boolean;
 };
 
 export type Snackbar = { opened: boolean; level: string; msg: string };

@@ -40,8 +40,9 @@ const getValueStrings = (
 };
 
 export const hasString = (value: string, filter: string) => {
-  if (!value || !filter) return false;
-  return value.toLowerCase().includes(filter.trim().toLowerCase());
+  const valString = String(value);
+  if (!valString || !filter) return false;
+  return valString.toLowerCase().includes(filter.trim().toLowerCase());
 };
 
 const hasMatch = (
