@@ -7,6 +7,8 @@ export type LayoutState = {
   file: File;
   showSR: boolean;
   drawer: Drawer;
+  enabledColumns: Array<string>;
+  expandAll: boolean;
   snackbar: { opened: boolean; level: string; msg: string };
 };
 
@@ -33,6 +35,8 @@ export type File = {
 
 export type Drawer = {
   opened: boolean;
+  filter: string;
+  columns: Array<string>;
 };
 
 export type Snackbar = { opened: boolean; level: string; msg: string };

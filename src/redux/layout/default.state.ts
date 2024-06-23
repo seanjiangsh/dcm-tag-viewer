@@ -9,6 +9,8 @@ export const initLayoutState: LayoutTypes.LayoutState = {
   screenSize: defaultScreenSize,
   file: { isSR: false },
   showSR: false,
-  drawer: { opened: false },
+  enabledColumns: [],
+  expandAll: false,
+  drawer: { opened: false, filter: "", columns: [] },
   snackbar: { opened: false, level: "info", msg: "" },
 };

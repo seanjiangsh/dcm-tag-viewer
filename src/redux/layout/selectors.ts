@@ -3,11 +3,6 @@ import { RootState } from "@redux/root-store";
 
 const selectLayout = (state: RootState) => state.layout;
 
-export const selectScreenSize = createSelector(
-  selectLayout,
-  (layout) => layout.screenSize
-);
-
 export const selectFileData = createSelector(
   selectLayout,
   (layout) => layout.file.data
@@ -26,6 +21,16 @@ export const selectShowSR = createSelector(
 export const selectDrawer = createSelector(
   selectLayout,
   (layout) => layout.drawer
+);
+
+export const selectEnabledColumns = createSelector(
+  selectLayout,
+  (layout) => layout.enabledColumns
+);
+
+export const selectExpandAll = createSelector(
+  selectLayout,
+  (layout) => layout.expandAll
 );
 
 export const selectSnackbar = createSelector(

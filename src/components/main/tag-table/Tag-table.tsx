@@ -4,10 +4,13 @@ import { Alert, CircularProgress, Paper } from "@mui/material";
 
 import { useDispatch, useSelector } from "@redux/root-hook";
 import { selectFileData } from "@redux/layout/selectors";
+import { layoutActions } from "@redux/layout/reducer";
 
 import * as tableTypes from "@components/tree-table/types";
 import TreeTable from "@components/tree-table/Tree-table";
 import tableUtils from "@components/tree-table/utils";
+
+const { setDrawerColumns, setEnabledColumns } = layoutActions;
 
 const columnDef: tableTypes.ColumnDef = [
   { header: "Tag", accessorKey: "values.tagStr" },
@@ -36,6 +39,12 @@ export default function TagTable() {
       setIsLoading(true);
       const data = tableUtils.getTagData(dcmJson);
       setTableData(data);
+      const allCols = columnDef.map((c) => c.header);
+      const enabledCols = columnDef
+        .filter((c) => !c.defaultDisabled)
+        .map((c) => c.header);
+      dispatch(setDrawerColumns(allCols));
+      dispatch(setEnabledColumns(enabledCols));
       setIsLoading(false);
     } catch (err) {
       console.error(err);
@@ -61,7 +70,6 @@ export default function TagTable() {
     } else {
       return (
         <TreeTable
-          showCtrl
           columnDef={columnDef}
           sourceData={tableData}
           onRowDblClick={onRowDblClick}

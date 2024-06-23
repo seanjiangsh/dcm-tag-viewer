@@ -3,8 +3,6 @@ import {
   AppBar as MuiAppBar,
   Toolbar,
   Typography,
-  useMediaQuery,
-  useTheme,
 } from "@mui/material";
 import { Menu } from "@mui/icons-material";
 
@@ -19,8 +17,6 @@ const AppBarStyle = { height: appBarHeight } as const;
 export default function AppBar() {
   const dispatch = useDispatch();
   const drawerOpened = useSelector(selectDrawer).opened;
-
-  const theme = useTheme();
 
   const menuClick = () =>
     dispatch(layoutActions.setDrawerOpened(!drawerOpened));

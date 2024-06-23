@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { debounce } from "throttle-debounce";
 import {
   ExpandedState,
   useReactTable,
@@ -11,40 +10,34 @@ import {
 } from "@tanstack/react-table";
 import {
   Alert,
-  Chip,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  OutlinedInput,
   Paper,
-  Select,
-  SelectChangeEvent,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
-  TextField,
 } from "@mui/material";
 
 import utils from "./utils";
 import * as types from "./types";
 import * as styles from "./styles";
+import { useSelector } from "@redux/root-hook";
+import {
+  selectDrawer,
+  selectEnabledColumns,
+  selectExpandAll,
+} from "@redux/layout/selectors";
 
 export default function TreeTable(props: types.TreeTableProps) {
-  const { sourceData, columnDef, showCtrl, defaultExpand, onRowDblClick } =
-    props;
+  const { sourceData, columnDef, defaultExpand, onRowDblClick } = props;
+
+  const { filter } = useSelector(selectDrawer);
+  const enabledCols = useSelector(selectEnabledColumns);
+  const expandAll = useSelector(selectExpandAll);
 
   const [hasError, setHasError] = useState(false);
   const [data, setData] = useState<Array<types.Data>>([]);
-  const [filter, setFilter] = useState("");
   const [expanded, setExpanded] = useState<ExpandedState>({});
-  const [enabledCols, setEnabledCols] = useState(
-    columnDef.reduce<Array<string>>(
-      (p, c) => (c.defaultDisabled ? p : [...p, c.header]),
-      []
-    )
-  );
 
   const getExpand = async (data: Array<types.Data>) =>
     defaultExpand && !filter
@@ -70,73 +63,24 @@ export default function TreeTable(props: types.TreeTableProps) {
   }, [filter, hasError]);
 
   useEffect(() => {
+    if (expandAll) setExpanded(true);
+    else getExpand(data).then(setExpanded);
+  }, [expandAll]);
+
+  useEffect(() => {
     return () => {
       setHasError(false);
       setData([]);
-      setFilter("");
       setExpanded({});
-      setEnabledCols([]);
     };
   }, []);
-
-  const searchChange = debounce(500, (e) => setFilter(e.target.value));
-  const selectChange = (e: SelectChangeEvent<Array<string>>) => {
-    const { value } = e.target;
-    const newCols = typeof value === "string" ? value.split(",") : value;
-    setEnabledCols(newCols);
-  };
-
-  const expandLabel = expanded === true ? "Collapse All" : "Expand All";
-  const expandAllIcon =
-    expanded === true ? utils.getExpandIcon(true) : utils.getExpandIcon(false);
-  const expandAllChange = async () => {
-    if (expanded === true) {
-      const expand = await getExpand(data);
-      setExpanded(expand);
-    } else {
-      setExpanded(true);
-    }
-  };
-
-  const CtrlElem = (
-    <div style={styles.CtrlHeaderStyle}>
-      <TextField
-        size="small"
-        variant="outlined"
-        label="Search"
-        sx={styles.CtrlItemStyle}
-        onChange={searchChange}
-      />
-      <FormControl size="small" sx={styles.CtrlItemStyle}>
-        <InputLabel>Columns</InputLabel>
-        <Select
-          multiple
-          value={enabledCols}
-          onChange={selectChange}
-          input={<OutlinedInput label="Columns" />}
-        >
-          {columnDef.map(({ header }, i) => (
-            <MenuItem key={`${header}-${i}`} value={header} sx={{ m: 1 }}>
-              {header}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      <Chip
-        variant="outlined"
-        icon={expandAllIcon}
-        label={expandLabel}
-        onClick={expandAllChange}
-        sx={styles.CtrlItemStyle}
-      />
-    </div>
-  );
 
   const columns: Array<ColumnDef<types.Data>> = useMemo(() => {
     return columnDef
       .filter((c) => enabledCols.includes(c.header))
       .map((col, i) => (i === 0 ? { ...col, cell: utils.getCell } : col));
   }, [enabledCols]);
+
   const table = useReactTable({
     data,
     columns,
@@ -147,10 +91,12 @@ export default function TreeTable(props: types.TreeTableProps) {
     onExpandedChange: setExpanded,
     debugTable: true,
   });
+
   const onRowDoubleClick = (row: Row<types.Data>) => {
     const { original } = row;
     if (onRowDblClick) onRowDblClick(original);
   };
+
   const TableElem = (
     <Table stickyHeader size="small">
       <TableHead>
@@ -196,10 +142,10 @@ export default function TreeTable(props: types.TreeTableProps) {
       Failed to load table data
     </Alert>
   );
+
   const ContentElem =
     sourceData.length > 0 ? (
       <React.Fragment>
-        {showCtrl ? CtrlElem : null}
         <Paper elevation={2} sx={{ overflow: "auto" }}>
           {TableElem}
         </Paper>

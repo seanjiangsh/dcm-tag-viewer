@@ -1,5 +1,3 @@
-import * as AppHooks from "@hooks/App.hooks";
-
 import AppBar from "@components/app-bar/Appbar";
 import Main from "@components/main/Main";
 import Drawer from "@components/drawer/Drawer";
@@ -13,8 +11,6 @@ const ContainerStyle = {
 } as const;
 
 export default function App() {
-  AppHooks.useSetWindowSize();
-
   return (
     <div style={ContainerStyle}>
       <AppBar />

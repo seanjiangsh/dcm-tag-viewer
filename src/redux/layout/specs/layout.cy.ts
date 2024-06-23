@@ -47,6 +47,34 @@ describe("layout reducer tests", () => {
     expect(newState.drawer.opened).to.deep.eq(opened);
   });
 
+  it("should set the filter", () => {
+    const filter = "filter";
+    const action = layoutActions.setDrawerFilter(filter);
+    const newState = layoutReducer(initLayoutState, action);
+    expect(newState.drawer.filter).to.deep.eq(filter);
+  });
+
+  it("should set the drawer columns", () => {
+    const columns = ["col1", "col2"];
+    const action = layoutActions.setDrawerColumns(columns);
+    const newState = layoutReducer(initLayoutState, action);
+    expect(newState.drawer.columns).to.deep.eq(columns);
+  });
+
+  it("should set the enabled columns", () => {
+    const columns = ["col1", "col2"];
+    const action = layoutActions.setEnabledColumns(columns);
+    const newState = layoutReducer(initLayoutState, action);
+    expect(newState.enabledColumns).to.deep.eq(columns);
+  });
+
+  it("should set the expand all flag", () => {
+    const expandAll = true;
+    const action = layoutActions.setExpandAll(expandAll);
+    const newState = layoutReducer(initLayoutState, action);
+    expect(newState.expandAll).to.deep.eq(expandAll);
+  });
+
   it("should set the snackbar", () => {
     const snackbar = { opened: true, level: "info", msg: "message" };
     const action = layoutActions.setSnackbar(snackbar);

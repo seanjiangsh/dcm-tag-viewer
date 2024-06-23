@@ -4,10 +4,12 @@ import { Alert, CircularProgress, Paper } from "@mui/material";
 
 import { useDispatch, useSelector } from "@redux/root-hook";
 import { selectFileData } from "@redux/layout/selectors";
-
+import { layoutActions } from "@redux/layout/reducer";
 import * as tableTypes from "@components/tree-table/types";
 import SRDataUtil from "@components/tree-table/utils/utils.sr-data";
 import TreeTable from "@components/tree-table/Tree-table";
+
+const { setDrawerColumns, setEnabledColumns } = layoutActions;
 
 const columnDef: tableTypes.ColumnDef = [
   { header: "Title", accessorKey: "values.title" },
@@ -45,6 +47,14 @@ export default function SRTable() {
       // console.log(data, expand);
       setTableData(data);
       setExpandData(expand);
+
+      const allCols = columnDef.map((c) => c.header);
+      const enabledCols = columnDef
+        .filter((c) => !c.defaultDisabled)
+        .map((c) => c.header);
+      dispatch(setDrawerColumns(allCols));
+      dispatch(setEnabledColumns(enabledCols));
+
       setIsLoading(false);
     } catch (err) {
       console.error(err);
@@ -79,7 +89,6 @@ export default function SRTable() {
     } else {
       return (
         <TreeTable
-          showCtrl
           columnDef={columnDef}
           sourceData={tableData}
           defaultExpand={expandData}

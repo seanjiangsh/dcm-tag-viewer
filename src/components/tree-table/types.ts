@@ -20,7 +20,6 @@ export type Data = {
 export type TreeTableProps = {
   sourceData: Array<Data>;
   columnDef: ColumnDef;
-  showCtrl?: boolean;
   defaultExpand?: ExpandedState;
   onRowDblClick?: (data: Data) => void;
 };

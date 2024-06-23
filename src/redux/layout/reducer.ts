@@ -45,6 +45,30 @@ const setDrawerOpened = (
 ) => {
   state.drawer.opened = action.payload;
 };
+const setDrawerFilter = (
+  state: LayoutTypes.LayoutState,
+  action: PayloadAction<string>
+) => {
+  state.drawer.filter = action.payload;
+};
+const setDrawerColumns = (
+  state: LayoutTypes.LayoutState,
+  action: PayloadAction<Array<string>>
+) => {
+  state.drawer.columns = action.payload;
+};
+const setEnabledColumns = (
+  state: LayoutTypes.LayoutState,
+  action: PayloadAction<Array<string>>
+) => {
+  state.enabledColumns = action.payload;
+};
+const setExpandAll = (
+  state: LayoutTypes.LayoutState,
+  action: PayloadAction<boolean>
+) => {
+  state.expandAll = action.payload;
+};
 const setSnackbar = (
   state: LayoutTypes.LayoutState,
   action: PayloadAction<{ level: string; msg: string }>
@@ -66,6 +90,10 @@ const layoutSlice = createSlice({
     setIsSR,
     setShowSR,
     setDrawerOpened,
+    setDrawerFilter,
+    setDrawerColumns,
+    setEnabledColumns,
+    setExpandAll,
     setSnackbar,
     clearSnackbar,
   },
