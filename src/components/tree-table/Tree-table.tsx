@@ -44,9 +44,20 @@ export default function TreeTable(props: types.TreeTableProps) {
       ? defaultExpand
       : await utils.getFilterExpand(data, filter);
 
+  const cleanUp = () => {
+    setHasError(false);
+    setData([]);
+    setExpanded({});
+    console.log("cleanUp");
+  };
+
   useEffect(() => {
-    if (hasError || sourceData.length < 1) return;
-    console.time("Sorting table data");
+    if (hasError) return;
+    if (!sourceData.length) {
+      cleanUp();
+      return;
+    }
+    // console.time("Sorting table data");
     utils
       .getTableData(sourceData, filter)
       .then(async (tableData) => {
@@ -59,8 +70,8 @@ export default function TreeTable(props: types.TreeTableProps) {
         console.error(err);
         setHasError(true);
       });
-    console.timeEnd("Sorting table data");
-  }, [filter, hasError]);
+    // console.timeEnd("Sorting table data");
+  }, [filter, hasError, sourceData]);
 
   useEffect(() => {
     if (expandAll) setExpanded(true);
@@ -68,12 +79,7 @@ export default function TreeTable(props: types.TreeTableProps) {
   }, [expandAll]);
 
   useEffect(() => {
-    return () => {
-      setHasError(false);
-      setData([]);
-      setExpanded({});
-      console.log("TreeTable unmount");
-    };
+    return cleanUp;
   }, []);
 
   const columns: Array<ColumnDef<types.Data>> = useMemo(() => {

@@ -6,7 +6,6 @@ import { selectFileData } from "@redux/layout/selectors";
 import { layoutActions } from "@redux/layout/reducer";
 
 import * as dcmParser from "@utils/dcm/parser";
-import { asyncSleep } from "@utils/misc";
 
 import { SRDataUtil } from "@components/tree-table/utils";
 
@@ -44,6 +43,8 @@ export default function FileDrop(props: FileDropProps) {
   const fileDrop: DragEventHandler<HTMLDivElement> = async (e) => {
     e.preventDefault();
     setDragging(false);
+    dispatch(resetLayoutState());
+
     const file = e.dataTransfer.files[0];
     const dataset = await dcmParser.parseDcm(file);
     if (!dataset) {
@@ -52,8 +53,6 @@ export default function FileDrop(props: FileDropProps) {
       dispatch(setSnackbar({ level: "error", msg }));
       return;
     }
-    dispatch(resetLayoutState());
-    await asyncSleep(1000);
 
     const dcmJson = dcmParser.getJson(dataset);
     const isSR = new SRDataUtil(dcmJson).isSR();

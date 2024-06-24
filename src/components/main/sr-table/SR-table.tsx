@@ -60,7 +60,7 @@ export default function SRTable() {
       console.error(err);
       setHasError(true);
     }
-  }, []);
+  }, [dcmJson]);
 
   const onRowDblClick = (data: tableTypes.Data) => {
     if (!dcmJson) return;
