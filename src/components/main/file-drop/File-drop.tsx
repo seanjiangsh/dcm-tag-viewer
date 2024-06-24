@@ -1,45 +1,45 @@
-import { DragEventHandler, useState } from "react";
-import { Paper } from "@mui/material";
+import { Dispatch, DragEventHandler, SetStateAction } from "react";
+import { Box } from "@mui/material";
 
-import { useDispatch } from "@redux/root-hook";
+import { useDispatch, useSelector } from "@redux/root-hook";
+import { selectFileData } from "@redux/layout/selectors";
 import { layoutActions } from "@redux/layout/reducer";
+
 import * as dcmParser from "@utils/dcm/parser";
+import { asyncSleep } from "@utils/misc";
 
 import { SRDataUtil } from "@components/tree-table/utils";
 
-const { setFileData, setIsSR, setShowSR, setSnackbar } = layoutActions;
+const { resetLayoutState, setFileData, setIsSR, setShowSR, setSnackbar } =
+  layoutActions;
 
-const PaperStyle = {
+const BoxStyle = (onTop: boolean) => ({
+  position: "absolute",
   width: "100%",
+  height: "100%",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   fontSize: "1.5rem",
-  m: 0.5,
-};
+  zIndex: onTop ? 10 : -10,
+  backgroundColor: onTop ? "white" : "transparent",
+});
 
-export default function FileDrop() {
+type FileDropProps = {
+  dragState: [boolean, Dispatch<SetStateAction<boolean>>];
+};
+export default function FileDrop(props: FileDropProps) {
+  const { dragState } = props;
+  const [dragging, setDragging] = dragState;
+
   const dispatch = useDispatch();
-  const [dragging, setDragging] = useState(false);
+  const fileData = useSelector(selectFileData);
+
+  const onTop = !fileData || dragging;
 
   const hint = dragging
     ? "Drop the DICOM file here..."
     : "Drag your DICOM file here";
-
-  const dragOver: DragEventHandler<HTMLDivElement> = (e) => {
-    e.preventDefault();
-    setDragging(true);
-  };
-
-  const dragEnter: DragEventHandler<HTMLDivElement> = (e) => {
-    e.preventDefault();
-    setDragging(true);
-  };
-
-  const dragLeave: DragEventHandler<HTMLDivElement> = (e) => {
-    e.preventDefault();
-    setDragging(false);
-  };
 
   const fileDrop: DragEventHandler<HTMLDivElement> = async (e) => {
     e.preventDefault();
@@ -52,6 +52,8 @@ export default function FileDrop() {
       dispatch(setSnackbar({ level: "error", msg }));
       return;
     }
+    dispatch(resetLayoutState());
+    await asyncSleep(1000);
 
     const dcmJson = dcmParser.getJson(dataset);
     const isSR = new SRDataUtil(dcmJson).isSR();
@@ -63,16 +65,11 @@ export default function FileDrop() {
     }
   };
 
+  const contents = onTop ? hint : null;
+
   return (
-    <Paper
-      elevation={8}
-      sx={PaperStyle}
-      onDragOver={dragOver}
-      onDragEnter={dragEnter}
-      onDragLeave={dragLeave}
-      onDrop={fileDrop}
-    >
-      {hint}
-    </Paper>
+    <Box sx={BoxStyle(onTop)} onDrop={fileDrop}>
+      {contents}
+    </Box>
   );
 }

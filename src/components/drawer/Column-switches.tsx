@@ -31,7 +31,7 @@ export default function ColumnSwitches() {
       dispatch(setEnabledColumns(newCols));
     };
     return (
-      <ListItem>
+      <ListItem key={c}>
         <ListItemIcon>
           <ViewColumn fontSize="large" />
         </ListItemIcon>

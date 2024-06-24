@@ -46,7 +46,7 @@ export default function TreeTable(props: types.TreeTableProps) {
 
   useEffect(() => {
     if (hasError || sourceData.length < 1) return;
-    // console.time("Sorting table data");
+    console.time("Sorting table data");
     utils
       .getTableData(sourceData, filter)
       .then(async (tableData) => {
@@ -59,7 +59,7 @@ export default function TreeTable(props: types.TreeTableProps) {
         console.error(err);
         setHasError(true);
       });
-    // console.timeEnd("Sorting table data");
+    console.timeEnd("Sorting table data");
   }, [filter, hasError]);
 
   useEffect(() => {
@@ -72,6 +72,7 @@ export default function TreeTable(props: types.TreeTableProps) {
       setHasError(false);
       setData([]);
       setExpanded({});
+      console.log("TreeTable unmount");
     };
   }, []);
 
@@ -126,8 +127,8 @@ export default function TreeTable(props: types.TreeTableProps) {
               const hasFilterStr = utils.hasString(value, filter);
               // console.log(row.id,  value, hasFilterStr);
               return (
-                <TableCell key={id} sx={styles.TDStyle(hasFilterStr)}>
-                  {ctx}
+                <TableCell key={id}>
+                  <span style={styles.TextStyle(hasFilterStr)}>{ctx}</span>
                 </TableCell>
               );
             })}
