@@ -4,10 +4,8 @@ import { DcmJsonModelObj, PNValue } from "./dcmTypes";
 import { TAG_DICT } from "./dataDictionary";
 import { valueDecode } from "./decoder";
 
-export const parseDcm = async (file: File) => {
+export const parseDcm = async (buffer: Uint8Array) => {
   try {
-    const arrayBuffer = await file.arrayBuffer();
-    const buffer = new Uint8Array(arrayBuffer);
     return dicomParser.parseDicom(buffer);
   } catch (err) {
     console.error(`Parse dcm failed`, err);

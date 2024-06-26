@@ -1,4 +1,4 @@
-import { DragEventHandler, useState } from "react";
+import { DragEventHandler, MouseEventHandler, useState } from "react";
 import { Box } from "@mui/material";
 
 import { useSelector } from "@redux/root-hook";
@@ -14,7 +14,6 @@ const MainStyle = {
   height: `calc(100% - ${appBarHeight}px)`,
   display: "flex",
   flexDirection: "row",
-  // p: 0.5,
 };
 
 export default function Main() {
@@ -36,6 +35,9 @@ export default function Main() {
 
   const dragLeave: DragEventHandler<HTMLDivElement> = (e) => {
     e.preventDefault();
+    // Check if the relatedTarget is a child of the current element
+    if (e.currentTarget.contains(e.relatedTarget as Node)) return;
+
     setDragging(false);
   };
 

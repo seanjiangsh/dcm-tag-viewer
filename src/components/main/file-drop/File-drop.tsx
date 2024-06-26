@@ -1,5 +1,12 @@
-import { Dispatch, DragEventHandler, SetStateAction } from "react";
-import { Box } from "@mui/material";
+import {
+  Dispatch,
+  DragEventHandler,
+  Fragment,
+  MouseEventHandler,
+  SetStateAction,
+  useState,
+} from "react";
+import { Box, Button, Typography } from "@mui/material";
 
 import { useDispatch, useSelector } from "@redux/root-hook";
 import { selectFileData } from "@redux/layout/selectors";
@@ -34,26 +41,22 @@ export default function FileDrop(props: FileDropProps) {
   const dispatch = useDispatch();
   const fileData = useSelector(selectFileData);
 
+  const [loadFileDelay, setLoadFileDelay] = useState(false);
+
   const onTop = !fileData || dragging;
+  const showLoadSampleElems = !dragging && !fileData && !loadFileDelay;
 
-  const hint = dragging
-    ? "Drop the DICOM file here..."
-    : "Drag your DICOM file here";
-
-  const fileDrop: DragEventHandler<HTMLDivElement> = async (e) => {
-    e.preventDefault();
-    setDragging(false);
-    dispatch(resetLayoutState());
-
-    const file = e.dataTransfer.files[0];
-    const dataset = await dcmParser.parseDcm(file);
+  const parseAndSetFileData = async (data: File | Response) => {
+    if (fileData) dispatch(resetLayoutState());
+    const arrayBuffer = await data.arrayBuffer();
+    const buffer = new Uint8Array(arrayBuffer);
+    const dataset = await dcmParser.parseDcm(buffer);
     if (!dataset) {
       const msg =
         "Failed to parse the file. Please check if it is a DICOM file.";
       dispatch(setSnackbar({ level: "error", msg }));
       return;
     }
-
     const dcmJson = dcmParser.getJson(dataset);
     const isSR = new SRDataUtil(dcmJson).isSR();
     // console.log(dcmJson);
@@ -64,7 +67,61 @@ export default function FileDrop(props: FileDropProps) {
     }
   };
 
-  const contents = onTop ? hint : null;
+  const fileDrop: DragEventHandler<HTMLDivElement> = async (e) => {
+    e.preventDefault();
+    setDragging(false);
+    setLoadFileDelay(true);
+    setTimeout(() => setLoadFileDelay(false), 1000);
+
+    const file = e.dataTransfer.files[0];
+    parseAndSetFileData(file);
+  };
+
+  const loadDefaultFile: MouseEventHandler<HTMLButtonElement> = async (e) => {
+    const id = e.currentTarget.id;
+    const type = id.split("-")[1];
+    const response = await fetch(`/samples/${type}.dcm`);
+    parseAndSetFileData(response);
+  };
+
+  const loadSampleElems = (
+    <Fragment>
+      <Typography variant="h5">or</Typography>
+      <Typography variant="h5">Load a sample file</Typography>
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 1, m: 1 }}>
+        <Button
+          fullWidth
+          variant="contained"
+          id="loadDefaultButton-MR"
+          onClick={loadDefaultFile}
+        >
+          MRI (MR)
+        </Button>
+        <Button
+          fullWidth
+          variant="contained"
+          id="loadDefaultButton-DX"
+          onClick={loadDefaultFile}
+        >
+          X-Ray (DX)
+        </Button>
+        <Button
+          fullWidth
+          variant="contained"
+          id="loadDefaultButton-SR"
+          onClick={loadDefaultFile}
+        >
+          Structured Report (SR)
+        </Button>
+      </Box>
+    </Fragment>
+  );
+  const contents = onTop && (
+    <Box style={{ textAlign: "center" }}>
+      <Typography variant="h4">Drop the DICOM file here</Typography>
+      {showLoadSampleElems && loadSampleElems}
+    </Box>
+  );
 
   return (
     <Box sx={BoxStyle(onTop)} onDrop={fileDrop}>
