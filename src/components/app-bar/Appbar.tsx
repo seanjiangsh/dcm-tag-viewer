@@ -22,7 +22,7 @@ export default function AppBar() {
     dispatch(layoutActions.setDrawerOpened(!drawerOpened));
 
   return (
-    <MuiAppBar id="AppBar" position="static" sx={AppBarStyle}>
+    <MuiAppBar id="Appbar" position="static" sx={AppBarStyle}>
       <Toolbar sx={AppBarStyle}>
         <IconButton
           size="large"

@@ -1,4 +1,4 @@
-import AppBar from "@components/app-bar/Appbar";
+import Appbar from "@components/app-bar/Appbar";
 import Main from "@components/main/Main";
 import Drawer from "@components/drawer/Drawer";
 import Snackbar from "@components/snackbar/Snackbar";
@@ -13,7 +13,7 @@ const ContainerStyle = {
 export default function App() {
   return (
     <div style={ContainerStyle}>
-      <AppBar />
+      <Appbar />
       <Main />
       <Drawer />
       <Snackbar />

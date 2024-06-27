@@ -13,7 +13,12 @@ export default function Snackbar() {
   const onClose = () => dispatch(layoutActions.clearSnackbar());
 
   return (
-    <MuiSnackbar open={opened} autoHideDuration={5000} onClose={onClose}>
+    <MuiSnackbar
+      id="Snackbar"
+      open={opened}
+      autoHideDuration={5000}
+      onClose={onClose}
+    >
       <Alert severity={severity} elevation={6} variant="filled">
         {msg}
       </Alert>

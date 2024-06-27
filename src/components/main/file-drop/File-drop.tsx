@@ -103,7 +103,7 @@ export default function FileDrop(props: FileDropProps) {
           id="loadDefaultButton-DX"
           onClick={loadDefaultFile}
         >
-          X-Ray (DX)
+          X-ray (DX)
         </Button>
         <Button
           fullWidth

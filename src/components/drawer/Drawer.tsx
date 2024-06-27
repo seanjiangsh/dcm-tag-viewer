@@ -28,6 +28,7 @@ export default function Drawer() {
 
   return (
     <MuiDrawer
+      id="Drawer"
       variant="temporary"
       open={opened}
       onClose={close}
