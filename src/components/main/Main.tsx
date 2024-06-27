@@ -1,4 +1,4 @@
-import { DragEventHandler, MouseEventHandler, useState } from "react";
+import { DragEventHandler, useState } from "react";
 import { Box } from "@mui/material";
 
 import { useSelector } from "@redux/root-hook";

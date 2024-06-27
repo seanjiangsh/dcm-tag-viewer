@@ -116,6 +116,7 @@ export default function FileDrop(props: FileDropProps) {
       </Box>
     </Fragment>
   );
+
   const contents = onTop && (
     <Box style={{ textAlign: "center" }}>
       <Typography variant="h4">Drop the DICOM file here</Typography>
@@ -124,7 +125,7 @@ export default function FileDrop(props: FileDropProps) {
   );
 
   return (
-    <Box sx={BoxStyle(onTop)} onDrop={fileDrop}>
+    <Box id="FileDrop" sx={BoxStyle(onTop)} onDrop={fileDrop}>
       {contents}
     </Box>
   );
