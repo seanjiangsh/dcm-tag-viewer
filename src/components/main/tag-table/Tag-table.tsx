@@ -79,7 +79,7 @@ export default function TagTable() {
     }
   };
   return (
-    <Paper elevation={8} sx={PaperStyle}>
+    <Paper id="TagTable" elevation={8} sx={PaperStyle}>
       {getElem()}
     </Paper>
   );

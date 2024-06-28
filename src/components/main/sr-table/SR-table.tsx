@@ -98,7 +98,7 @@ export default function SRTable() {
     }
   };
   return (
-    <Paper elevation={8} sx={PaperStyle}>
+    <Paper id="SRTable" elevation={8} sx={PaperStyle}>
       {getElem()}
     </Paper>
   );
