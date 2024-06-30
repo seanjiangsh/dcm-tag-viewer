@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Drawer as MuiDrawer,
   ListItemButton,
@@ -17,6 +18,7 @@ import SRSwitch from "./SR-switch";
 import ColumnSwitches from "./Column-switches";
 import ExpandSwitch from "./Expand-switch";
 import ClearFileButton from "./ClearFileButton";
+import About from "./About";
 
 const { setDrawerOpened } = layoutActions;
 
@@ -30,11 +32,11 @@ export default function Drawer() {
     <MuiDrawer
       id="Drawer"
       variant="temporary"
+      ModalProps={{ keepMounted: true }}
       open={opened}
       onClose={close}
-      ModalProps={{ keepMounted: true }}
     >
-      <List sx={{ pt: 0 }}>
+      <List sx={{ pt: 0, minWidth: 240 }}>
         <ListItemButton onClick={close}>
           <ListItemIcon>
             <ChevronLeft fontSize="large" />
@@ -48,6 +50,7 @@ export default function Drawer() {
         <ColumnSwitches />
         <ExpandSwitch />
         <ClearFileButton />
+        <About />
       </List>
     </MuiDrawer>
   );
