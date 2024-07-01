@@ -74,7 +74,6 @@ export default function FileDrop(props: FileDropProps) {
     setTimeout(() => setLoadFileDelay(false), 1000);
 
     const file = e.dataTransfer.files[0];
-    console.log(file);
     parseAndSetFileData(file);
   };
 

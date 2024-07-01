@@ -58,4 +58,14 @@ describe("File drop e2e tests", () => {
     });
     cy.get('[id="TagTable"]').should("exist");
   });
+
+  it("render failed to load dcm file message", () => {
+    const opt: any = { subjectType: "drag-n-drop" };
+    cy.get('[id="FileDrop"]').attachFile("nyancat.png", opt);
+    cy.wait(1000);
+
+    const failedMsg =
+      "Failed to parse the file. Please check if it is a DICOM file.";
+    cy.get('[id="Snackbar"]').contains(failedMsg);
+  });
 });
