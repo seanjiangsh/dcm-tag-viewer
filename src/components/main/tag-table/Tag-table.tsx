@@ -2,10 +2,9 @@ import { useEffect, useState } from "react";
 import { JSONPath } from "jsonpath-plus";
 import { Alert, CircularProgress, Paper } from "@mui/material";
 
-import { useDispatch, useSelector } from "@redux/root-hook";
-import { selectFileData } from "@redux/layout/selectors";
+import { useDispatch } from "@redux/root-hook";
 import { layoutActions } from "@redux/layout/reducer";
-import { asyncSleep } from "@utils/misc";
+import { DcmJsonModelObj } from "@utils/dcm/dcmTypes";
 
 import * as tableTypes from "@components/tree-table/types";
 import TreeTable from "@components/tree-table/Tree-table";
@@ -26,9 +25,12 @@ const PaperStyle = {
   width: "100%",
 };
 
-export default function TagTable() {
+type TagTableProps = { dcmJson: DcmJsonModelObj };
+
+export default function TagTable(props: TagTableProps) {
+  const { dcmJson } = props;
+
   const dispatch = useDispatch();
-  const dcmJson = useSelector(selectFileData);
 
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);

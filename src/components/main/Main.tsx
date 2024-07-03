@@ -41,7 +41,8 @@ export default function Main() {
     setDragging(false);
   };
 
-  const table = fileData ? showSR ? <SRTable /> : <TagTable /> : null;
+  const TableElem = showSR ? SRTable : TagTable;
+  const table = fileData ? <TableElem dcmJson={fileData} /> : null;
 
   return (
     <Box
