@@ -37,7 +37,6 @@ export default function TagTable(props: TagTableProps) {
   const [tableData, setTableData] = useState<Array<tableTypes.Data>>([]);
 
   useEffect(() => {
-    if (!dcmJson) return;
     try {
       setIsLoading(true);
       const data = tableUtils.getTagData(dcmJson);
@@ -55,11 +54,11 @@ export default function TagTable(props: TagTableProps) {
     }
   }, [dcmJson]);
 
-  const onRowDblClick = (data: tableTypes.Data) => {
-    if (!dcmJson) return;
-    const node = JSONPath({ json: dcmJson, path: data.key })[0];
-    // console.log(data, node);
-  };
+  // const onRowDblClick = (data: tableTypes.Data) => {
+  //   if (!dcmJson) return;
+  //   const node = JSONPath({ json: dcmJson, path: data.key })[0];
+  //   // console.log(data, node);
+  // };
 
   const getElem = () => {
     if (hasError) {
@@ -71,13 +70,7 @@ export default function TagTable(props: TagTableProps) {
     } else if (isLoading) {
       return <CircularProgress sx={{ m: "auto" }} />;
     } else {
-      return (
-        <TreeTable
-          columnDef={columnDef}
-          sourceData={tableData}
-          onRowDblClick={onRowDblClick}
-        />
-      );
+      return <TreeTable columnDef={columnDef} sourceData={tableData} />;
     }
   };
   return (
