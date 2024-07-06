@@ -1,6 +1,6 @@
 describe("SR table e2e tests", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:5173");
+    cy.visit("/");
   });
 
   it("renders proper SRTable elements", () => {

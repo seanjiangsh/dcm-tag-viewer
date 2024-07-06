@@ -1,6 +1,6 @@
 describe("Main e2e tests", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:5173");
+    cy.visit("/");
   });
 
   it("renders proper Main elements before file loaded", () => {

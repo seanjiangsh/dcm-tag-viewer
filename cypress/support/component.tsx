@@ -22,19 +22,22 @@ import "@cypress/code-coverage/support";
 
 import { mount } from "cypress/react18";
 
+import { Provider } from "react-redux";
+import { setupStore } from "../../src/redux/root-store";
+
 // Augment the Cypress namespace to include type definitions for
 // your custom command.
 // Alternatively, can be defined in cypress/support/component.d.ts
 // with a <reference path="./component" /> at the top of your spec.
-declare global {
-  namespace Cypress {
-    interface Chainable {
-      mount: typeof mount;
-    }
-  }
-}
 
-Cypress.Commands.add("mount", mount);
+// Cypress.Commands.add("mount", mount);
+Cypress.Commands.add("mount", (component, options = {}) => {
+  // Use the default store if one is not provided
+  const { reduxStore = setupStore(), ...mountOptions } = options;
+  const wrapped = <Provider store={reduxStore}>{component}</Provider>;
+
+  return mount(wrapped, mountOptions);
+});
 
 // Example use:
 // cy.mount(<MyComponent />)

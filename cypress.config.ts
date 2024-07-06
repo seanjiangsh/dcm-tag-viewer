@@ -14,6 +14,8 @@ export default defineConfig({
     devServer: { framework: "react", bundler: "vite" },
     setupNodeEvents,
   },
-
-  e2e: { setupNodeEvents },
+  e2e: {
+    baseUrl: "http://localhost:5173",
+    setupNodeEvents,
+  },
 });

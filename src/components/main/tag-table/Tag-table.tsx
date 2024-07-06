@@ -61,6 +61,7 @@ export default function TagTable(props: TagTableProps) {
   // };
 
   const getElem = () => {
+    console.log(hasError);
     if (hasError) {
       return (
         <Alert variant="outlined" severity="error" sx={{ m: "auto" }}>

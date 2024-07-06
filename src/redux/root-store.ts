@@ -14,11 +14,15 @@ const middlewares: Array<Middleware> = import.meta.env.DEV ? [logger] : [];
 
 const rootReducer = combineReducers({ layout: layoutReducer });
 
-export const store = configureStore({
-  reducer: rootReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().prepend(middlewares),
-});
+export const setupStore = (preloadedState = {}) =>
+  configureStore({
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().prepend(middlewares),
+    preloadedState,
+  });
+
+export const store = setupStore();
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;

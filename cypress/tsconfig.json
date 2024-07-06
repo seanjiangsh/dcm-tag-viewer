@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
+    "jsx": "react-jsx",
     "target": "es5",
     "lib": ["es5", "dom"],
     "types": ["node", "cypress", "cypress-file-upload"]
   },
-  "include": ["**/*.ts"]
+  "include": ["**/*.ts", "support/component.tsx"]
 }

@@ -1,6 +1,6 @@
 describe("File drop e2e tests", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:5173");
+    cy.visit("/");
   });
 
   it("renders proper FileDrop elements", () => {
