@@ -11,6 +11,7 @@
     "cy:unit": "cypress run --component",
     "cy:e2e": "start-test dev 5173 'cypress run --e2e'",
     "test": "npm run cy:unit && npm run cy:e2e",
+    "test2": "start-test dev 5173 'cypress run'",
     "arc:deploy": "npm run build && arc deploy --production",
     "arc:destroy": "arc destroy --app dcm-tag-viewer --production --force"
   },
