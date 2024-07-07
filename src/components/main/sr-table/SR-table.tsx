@@ -6,8 +6,9 @@ import { DcmJsonModelObj } from "@utils/dcm/dcmTypes";
 
 import { useDispatch } from "@redux/root-hook";
 import { layoutActions } from "@redux/layout/reducer";
+
+import tableUtils from "@components/tree-table/utils";
 import * as tableTypes from "@components/tree-table/types";
-import SRDataUtil from "@components/tree-table/utils/utils.sr-data";
 import TreeTable from "@components/tree-table/Tree-table";
 
 const { setDrawerColumns, setEnabledColumns } = layoutActions;
@@ -38,9 +39,8 @@ export default function SRTable(props: SRTableProps) {
 
   useEffect(() => {
     try {
-      const srUtil = new SRDataUtil(dcmJson);
-      const data = srUtil.getSRData();
-      const expand = srUtil.getSRInitExpands();
+      const data = tableUtils.getSRData(dcmJson);
+      const expand = tableUtils.getSRInitExpands();
       // console.log(data, expand);
       setTableData(data);
       setExpandData(expand);
@@ -72,7 +72,7 @@ export default function SRTable(props: SRTableProps) {
     if (hasError) {
       return (
         <Alert variant="outlined" severity="error" sx={{ m: "auto" }}>
-          Load DICOM tag info failed
+          Load SR tag info failed
         </Alert>
       );
     } else if (isLoading) {

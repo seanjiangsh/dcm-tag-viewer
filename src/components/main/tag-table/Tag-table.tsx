@@ -6,9 +6,9 @@ import { useDispatch } from "@redux/root-hook";
 import { layoutActions } from "@redux/layout/reducer";
 import { DcmJsonModelObj } from "@utils/dcm/dcmTypes";
 
-import * as tableTypes from "@components/tree-table/types";
-import TreeTable from "@components/tree-table/Tree-table";
 import tableUtils from "@components/tree-table/utils";
+import TreeTable from "@components/tree-table/Tree-table";
+import * as tableTypes from "@components/tree-table/types";
 
 const { setDrawerColumns, setEnabledColumns } = layoutActions;
 

@@ -14,7 +14,7 @@ import { layoutActions } from "@redux/layout/reducer";
 
 import * as dcmParser from "@utils/dcm/parser";
 
-import { SRDataUtil } from "@components/tree-table/utils";
+import tableUtils from "@components/tree-table/utils";
 
 const { resetLayoutState, setFileData, setIsSR, setShowSR, setSnackbar } =
   layoutActions;
@@ -57,9 +57,11 @@ export default function FileDrop(props: FileDropProps) {
       dispatch(setSnackbar({ level: "error", msg }));
       return;
     }
+
     const dcmJson = dcmParser.getJson(dataset);
-    const isSR = new SRDataUtil(dcmJson).isSR();
+    const isSR = tableUtils.isSR(dcmJson);
     // console.log(dcmJson);
+
     dispatch(setFileData(dcmJson));
     if (isSR) {
       dispatch(setIsSR(isSR));

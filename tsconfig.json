@@ -26,10 +26,6 @@
       "@componentUtils/*": ["components/utils/*"]
     }
   },
-  "include": [
-    "src",
-    "cypress/cypress.d.ts",
-    "src/components/main/tag-table/specs"
-  ],
+  "include": ["src", "cypress/cypress.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
