@@ -5,7 +5,7 @@ describe("Tag table e2e tests", () => {
 
   it("renders proper SRTable elements", () => {
     cy.fixture("MR.dcm", "binary").then((fileContent) => {
-      cy.get('[id="FileDrop"]').attachFile(
+      cy.get("#FileDrop").attachFile(
         {
           fileContent,
           fileName: "MR.dcm",
@@ -17,9 +17,9 @@ describe("Tag table e2e tests", () => {
       cy.wait(1000);
     });
 
-    cy.get('[id="TagTable"]').should("exist");
-    cy.get('[id="TagTable"]').contains("Tag");
-    cy.get('[id="TagTable"]').contains("Name");
-    cy.get('[id="TagTable"]').contains("Values");
+    cy.get("#TagTable").should("exist");
+    cy.get("#TagTable").contains("Tag");
+    cy.get("#TagTable").contains("Name");
+    cy.get("#TagTable").contains("Values");
   });
 });

@@ -4,15 +4,15 @@ describe("AppBar e2e tests", () => {
   });
 
   it("renders proper Appbar elements", () => {
-    cy.get('[id="Appbar"]').should("exist").contains("DICOM Tag Viewer");
+    cy.get("#Appbar").should("exist").contains("DICOM Tag Viewer");
 
-    const menuButton = cy.get('[aria-label="menu"]');
+    const menuButton = cy.get("#appbar-drawer-menu");
     menuButton.should("exist");
   });
 
   it("opens the drawer when the menu button is clicked", () => {
-    cy.get('[id="Drawer"]').should("not.exist");
-    cy.get('[aria-label="menu"]').click();
-    cy.get('[id="Drawer"]').should("exist");
+    cy.get("#Drawer").should("not.exist");
+    cy.get("#appbar-drawer-menu").click();
+    cy.get("#Drawer").should("exist");
   });
 });

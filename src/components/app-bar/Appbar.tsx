@@ -28,7 +28,7 @@ export default function AppBar() {
           size="large"
           edge="start"
           color="inherit"
-          aria-label="menu"
+          id="appbar-drawer-menu"
           sx={{ mr: 2 }}
           onClick={menuClick}
         >

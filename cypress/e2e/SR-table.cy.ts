@@ -5,7 +5,7 @@ describe("SR table e2e tests", () => {
 
   it("renders proper SRTable elements", () => {
     cy.fixture("SR.dcm", "binary").then((fileContent) => {
-      cy.get('[id="FileDrop"]').attachFile(
+      cy.get("#FileDrop").attachFile(
         {
           fileContent,
           fileName: "SR.dcm",
@@ -17,9 +17,9 @@ describe("SR table e2e tests", () => {
       cy.wait(1000);
     });
 
-    cy.get('[id="SRTable"]').should("exist");
-    cy.get('[id="SRTable"]').contains("Title");
-    cy.get('[id="SRTable"]').contains("Value");
-    cy.get('[id="SRTable"]').contains("Unit");
+    cy.get("#SRTable").should("exist");
+    cy.get("#SRTable").contains("Title");
+    cy.get("#SRTable").contains("Value");
+    cy.get("#SRTable").contains("Unit");
   });
 });
