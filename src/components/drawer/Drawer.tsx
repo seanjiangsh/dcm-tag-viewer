@@ -37,7 +37,7 @@ export default function Drawer() {
       onClose={close}
     >
       <List sx={{ pt: 0, minWidth: 240 }}>
-        <ListItemButton onClick={close}>
+        <ListItemButton id="Drawer-close-button" onClick={close}>
           <ListItemIcon>
             <ChevronLeft fontSize="large" />
           </ListItemIcon>

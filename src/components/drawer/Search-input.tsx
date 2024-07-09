@@ -43,7 +43,7 @@ export default function SearchInput() {
           autoFocus
           size="small"
           variant="outlined"
-          id="drawer-search"
+          id="Search-input"
           label="Search"
           onChange={searchChange}
           value={search}

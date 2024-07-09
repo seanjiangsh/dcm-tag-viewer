@@ -29,7 +29,7 @@ export default function About() {
   };
 
   const dialog = (
-    <Dialog open={opened} onClose={close}>
+    <Dialog id="About" open={opened} onClose={close}>
       <DialogTitle style={{ display: "flex", flexDirection: "row" }}>
         <Info fontSize="large" sx={{ mr: 2 }} />
         <Box sx={{ mt: "auto" }}>About</Box>
@@ -64,7 +64,7 @@ export default function About() {
 
   return (
     <Fragment>
-      <ListItemButton onClick={open}>
+      <ListItemButton id="About-button" onClick={open}>
         <ListItemIcon>
           <Info fontSize="large" />
         </ListItemIcon>

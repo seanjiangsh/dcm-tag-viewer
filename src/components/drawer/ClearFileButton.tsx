@@ -20,7 +20,11 @@ export default function ClearFileButton() {
 
   return (
     fileData && (
-      <ListItemButton disabled={!fileData} onClick={clearFile}>
+      <ListItemButton
+        id="ClearFile-button"
+        disabled={!fileData}
+        onClick={clearFile}
+      >
         <ListItemIcon>
           <DeleteForever fontSize="large" />
         </ListItemIcon>

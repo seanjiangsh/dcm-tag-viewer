@@ -25,7 +25,7 @@ export default function SRSwitch() {
   return (
     fileData &&
     isSR && (
-      <ListItem>
+      <ListItem id="SR-switch">
         <ListItemIcon>
           <Assignment fontSize="large" />
         </ListItemIcon>

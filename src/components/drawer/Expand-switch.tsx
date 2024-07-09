@@ -22,7 +22,7 @@ export default function ExpandSwitch() {
 
   return (
     fileData && (
-      <ListItem>
+      <ListItem id="Expand-switch">
         <ListItemIcon>{expandIcon}</ListItemIcon>
         <ListItemText primary={"Expand All"} />
         <Switch edge="end" checked={expandAll} onChange={change} />
