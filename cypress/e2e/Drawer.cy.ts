@@ -26,18 +26,8 @@ describe("Drawer E2E Tests", () => {
 
   it("should contain control elements except SR switch after dcm file is loaded", () => {
     // Load a sample file first
-    cy.fixture("MR.dcm", "binary").then((fileContent) => {
-      cy.get("#FileDrop").attachFile(
-        {
-          fileContent,
-          fileName: "MR.dcm",
-          mimeType: "application/dicom",
-          encoding: "binary",
-        },
-        { subjectType: "drag-n-drop" }
-      );
-      cy.wait(1000);
-    });
+    cy.get("#loadDefaultButton-SR").click();
+    cy.wait(1000);
 
     // Open the drawer
     cy.get("#Appbar-menu-button").click();
@@ -55,18 +45,8 @@ describe("Drawer E2E Tests", () => {
 
   it("should contain all control elements after SR file is loaded", () => {
     // Load a sample file first
-    cy.fixture("SR.dcm", "binary").then((fileContent) => {
-      cy.get("#FileDrop").attachFile(
-        {
-          fileContent,
-          fileName: "SR.dcm",
-          mimeType: "application/dicom",
-          encoding: "binary",
-        },
-        { subjectType: "drag-n-drop" }
-      );
-      cy.wait(1000);
-    });
+    cy.get("#loadDefaultButton-SR").click();
+    cy.wait(1000);
 
     // Open the drawer
     cy.get("#Appbar-menu-button").click();
@@ -81,5 +61,28 @@ describe("Drawer E2E Tests", () => {
       cy.get("#ClearFile-button").should("exist");
       cy.get("#About-button").should("exist");
     });
+  });
+
+  it("should has the proper search state after typing", () => {
+    // Load a sample file first
+    cy.get("#loadDefaultButton-MR").click();
+    cy.wait(1000);
+
+    // Open the drawer
+    cy.get("#Appbar-menu-button").click();
+    cy.get("#Drawer").should("be.visible");
+
+    // Type "Patient" in the search input
+    cy.get("#Search-input").type("Patient").wait(500);
+    cy.get("#Search-input").should("have.value", "Patient");
+
+    // Access the Redux store from the window object
+    cy.window()
+      .its("store")
+      .invoke("getState")
+      .then((state) => {
+        const { drawer } = state.layout;
+        expect(drawer).to.have.property("filter", "Patient");
+      });
   });
 });

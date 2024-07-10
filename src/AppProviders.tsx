@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
 // * react-redux (data)
@@ -18,6 +19,10 @@ const ErrorFallback = (err: any) => {
 };
 
 export default function AppProviders() {
+  useEffect(() => {
+    if (window.Cypress) window.store = store;
+  }, []);
+
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
       <Provider store={store}>
