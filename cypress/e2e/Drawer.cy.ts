@@ -84,5 +84,58 @@ describe("Drawer E2E Tests", () => {
         const { drawer } = state.layout;
         expect(drawer).to.have.property("filter", "Patient");
       });
+
+    const tagTableData = [
+      ["(0010,0010)", "PatientName", "anonymous"],
+      ["(0010,0020)", "PatientID", "MR-xozYC2vTfc"],
+      ["(0010,0032)", "PatientBirthTime", "000000"],
+      ["(0010,0040)", "PatientSex", "F"],
+      ["(0010,1010)", "PatientAge", "054Y"],
+      ["(0010,1030)", "PatientWeight", "43"],
+      ["(0010,21B0)", "AdditionalPatientHistory", ""],
+      ["(0010,4000)", "PatientComments", ""],
+      ["(0018,5100)", "PatientPosition", "HFS"],
+      [
+        "(0020,0032)",
+        "ImagePositionPatient",
+        "-127.67740252145, -160.54412870452, 112.53540630822",
+      ],
+      [
+        "(0020,0037)",
+        "ImageOrientationPatient",
+        "0.99947261810302, 0.02601366117596, -0.0194367486983, -0.0232624839991, 0.99119043350219, 0.13038571178913",
+      ],
+      ["(0038,0500)", "PatientState", ""],
+      ["(0040,1004)", "PatientTransportArrangements", ""],
+    ];
+
+    // TabTable has the proper data
+    const tagTableRows = cy.get("#TagTable").find("tr");
+    tagTableRows.should("have.length", 14);
+    tagTableRows.each((row, rowIdx_from_1) => {
+      row.find("td").each(function (cellIdx) {
+        // `this` now refers to the current cell as a DOM element
+        // Use jQuery's `text()` or `html()` method to get its content
+        const cellContent = Cypress.$(this).text();
+        const rowIdx = rowIdx_from_1 - 1;
+        expect(cellContent).to.equal(tagTableData[rowIdx][cellIdx]);
+      });
+    });
+
+    // Clear the search input
+    cy.get("#Search-input").clear().wait(500);
+
+    // check the filter value of Redux store
+    cy.window()
+      .its("store")
+      .invoke("getState")
+      .then((state) => {
+        const { drawer } = state.layout;
+        expect(drawer).to.have.property("filter", "");
+      });
+
+    // TabTable should has all rows
+    const tagTableRowsAfterClear = cy.get("#TagTable").find("tr");
+    tagTableRowsAfterClear.should("have.length", 159);
   });
 });
