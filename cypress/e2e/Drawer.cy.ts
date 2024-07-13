@@ -24,9 +24,9 @@ describe("Drawer E2E Tests", () => {
     });
   });
 
-  it("should contain control elements except SR switch after dcm file is loaded", () => {
+  it("should contain control elements switch after dcm file is loaded", () => {
     // Load a sample file first
-    cy.get("#loadDefaultButton-SR").click();
+    cy.get("#loadDefaultButton-MR").click();
     cy.wait(1000);
 
     // Open the drawer
@@ -36,8 +36,22 @@ describe("Drawer E2E Tests", () => {
     // Assert each component is present
     cy.get("#Drawer").within(() => {
       cy.get("#Search-input").should("exist");
-      cy.get("#Column-switches").should("exist");
-      cy.get("#Expand-switch").should("exist");
+      cy.get("#Column-switch-Tag input[type='checkbox']")
+        .should("exist")
+        .should("be.checked");
+      cy.get("#Column-switch-Name input[type='checkbox']")
+        .should("exist")
+        .should("be.checked");
+      cy.get("#Column-switch-VR input[type='checkbox']")
+        .should("exist")
+        .should("not.be.checked");
+      cy.get("#Column-switch-Values input[type='checkbox']")
+        .should("exist")
+        .should("be.checked");
+      cy.get("#Expand-switch input[type='checkbox']")
+        .should("exist")
+        .should("not.be.checked");
+      cy.get("#SR-switch").should("not.exist");
       cy.get("#ClearFile-button").should("exist");
       cy.get("#About-button").should("exist");
     });
@@ -56,8 +70,21 @@ describe("Drawer E2E Tests", () => {
     cy.get("#Drawer").within(() => {
       cy.get("#Search-input").should("exist");
       cy.get("#SR-switch").should("exist");
-      cy.get("#Column-switches").should("exist");
-      cy.get("#Expand-switch").should("exist");
+      cy.get("#SR-switch input[type='checkbox']")
+        .should("exist")
+        .should("be.checked");
+      cy.get("#Column-switch-Title input[type='checkbox']")
+        .should("exist")
+        .should("be.checked");
+      cy.get("#Column-switch-Value input[type='checkbox']")
+        .should("exist")
+        .should("be.checked");
+      cy.get("#Column-switch-Unit input[type='checkbox']")
+        .should("exist")
+        .should("be.checked");
+      cy.get("#Expand-switch input[type='checkbox']")
+        .should("exist")
+        .should("not.be.checked");
       cy.get("#ClearFile-button").should("exist");
       cy.get("#About-button").should("exist");
     });
@@ -137,5 +164,29 @@ describe("Drawer E2E Tests", () => {
     // TabTable should has all rows
     const tagTableRowsAfterClear = cy.get("#TagTable").find("tr");
     tagTableRowsAfterClear.should("have.length", 159);
+  });
+
+  it("should has the proper table header after column switchs changed", () => {
+    cy.get("#loadDefaultButton-MR").click();
+    cy.wait(1000);
+
+    // Open the drawer
+    cy.get("#Appbar-menu-button").click();
+    cy.get("#Drawer").within(() => {
+      cy.get("#Column-switch-VR input[type='checkbox']").click();
+      cy.wait(500);
+    });
+
+    const tagTableHeader = cy.get("#TagTable").find("thead tr");
+    tagTableHeader.should("have.length", 1);
+
+    cy.get("#TagTable")
+      .find("thead tr")
+      .within(() => {
+        cy.get("th").eq(0).should("have.text", "Tag");
+        cy.get("th").eq(1).should("have.text", "Name");
+        cy.get("th").eq(2).should("have.text", "VR");
+        cy.get("th").eq(3).should("have.text", "Values");
+      });
   });
 });
