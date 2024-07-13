@@ -189,4 +189,38 @@ describe("Drawer E2E Tests", () => {
         cy.get("th").eq(3).should("have.text", "Values");
       });
   });
+
+  it("should correctly switch between SR/Tag table", () => {
+    cy.get("#loadDefaultButton-SR").click();
+    cy.wait(1000);
+
+    // Open the drawer
+    cy.get("#Appbar-menu-button").click();
+
+    // Switch to Tag table
+    cy.get('#SR-switch input[type="checkbox"]').click();
+    cy.wait(500);
+
+    // Check Tag table header
+    cy.get("#TagTable")
+      .find("thead tr")
+      .within(() => {
+        cy.get("th").eq(0).should("have.text", "Tag");
+        cy.get("th").eq(1).should("have.text", "Name");
+        cy.get("th").eq(2).should("have.text", "Values");
+      });
+
+    // Switch to SR table
+    cy.get('#SR-switch input[type="checkbox"]').click();
+    cy.wait(500);
+
+    // Check SR table header first
+    cy.get("#SRTable")
+      .find("thead tr")
+      .within(() => {
+        cy.get("th").eq(0).should("have.text", "Title");
+        cy.get("th").eq(1).should("have.text", "Value");
+        cy.get("th").eq(2).should("have.text", "Unit");
+      });
+  });
 });
