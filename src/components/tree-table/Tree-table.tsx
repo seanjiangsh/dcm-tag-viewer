@@ -48,7 +48,6 @@ export default function TreeTable(props: types.TreeTableProps) {
     setHasError(false);
     setData([]);
     setExpanded({});
-    console.log("cleanUp");
   };
 
   useEffect(() => {

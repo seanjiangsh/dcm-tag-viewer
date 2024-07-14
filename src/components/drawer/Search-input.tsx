@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "@redux/root-hook";
 import { selectDrawer, selectFileData } from "@redux/layout/selectors";
 import { layoutActions } from "@redux/layout/reducer";
 
-const { setDrawerFilter } = layoutActions;
+const { setDrawerFilter, setExpandAll } = layoutActions;
 
 export default function SearchInput() {
   const dispatch = useDispatch();
@@ -20,7 +20,10 @@ export default function SearchInput() {
   > = (e) => setSearch(e.target.value);
 
   const dispatchSearch = useCallback(
-    debounce(500, (val: string) => dispatch(setDrawerFilter(val))),
+    debounce(500, (val: string) => {
+      dispatch(setDrawerFilter(val));
+      dispatch(setExpandAll(false));
+    }),
     [dispatch]
   );
 
@@ -35,6 +38,11 @@ export default function SearchInput() {
     const searchElem = document.getElementById("drawer-search");
     searchElem?.focus();
   }, [opened]);
+
+  // * Clear search input when file data is cleared
+  useEffect(() => {
+    if (!fileData) setSearch("");
+  }, [fileData]);
 
   return (
     fileData && (

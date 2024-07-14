@@ -2,7 +2,11 @@ import { ListItem, ListItemIcon, ListItemText, Switch } from "@mui/material";
 import { ExpandMore, ChevronRight } from "@mui/icons-material";
 
 import { useDispatch, useSelector } from "@redux/root-hook";
-import { selectExpandAll, selectFileData } from "@redux/layout/selectors";
+import {
+  selectDrawer,
+  selectExpandAll,
+  selectFileData,
+} from "@redux/layout/selectors";
 import { layoutActions } from "@redux/layout/reducer";
 
 const { setExpandAll } = layoutActions;
@@ -11,10 +15,16 @@ export default function ExpandSwitch() {
   const dispatch = useDispatch();
   const fileData = useSelector(selectFileData);
   const expandAll = useSelector(selectExpandAll);
+  const { filter } = useSelector(selectDrawer);
+  const hasFilter = !!filter;
+  const checked = expandAll && !hasFilter;
 
-  const change = () => dispatch(setExpandAll(!expandAll));
+  const change = () => {
+    if (hasFilter) return;
+    dispatch(setExpandAll(!expandAll));
+  };
 
-  const expandIcon = expandAll ? (
+  const expandIcon = checked ? (
     <ExpandMore fontSize="large" />
   ) : (
     <ChevronRight fontSize="large" />
@@ -25,7 +35,12 @@ export default function ExpandSwitch() {
       <ListItem id="Expand-switch">
         <ListItemIcon>{expandIcon}</ListItemIcon>
         <ListItemText primary={"Expand All"} />
-        <Switch edge="end" checked={expandAll} onChange={change} />
+        <Switch
+          edge="end"
+          disabled={hasFilter}
+          checked={checked}
+          onChange={change}
+        />
       </ListItem>
     )
   );
