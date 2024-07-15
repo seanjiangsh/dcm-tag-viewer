@@ -8,9 +8,9 @@ import * as styles from "../styles";
 export const getExpandIcon = (isExpanded: boolean, onClick?: () => void) => (
   <IconButton sx={styles.ExpandIconStyle} onClick={onClick}>
     {isExpanded ? (
-      <ExpandMore id="expanded-icon" />
+      <ExpandMore className="expanded-icon" />
     ) : (
-      <ChevronRight id="collapsed-icon" />
+      <ChevronRight className="collapsed-icon" />
     )}
   </IconButton>
 );

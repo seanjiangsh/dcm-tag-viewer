@@ -223,4 +223,48 @@ describe("Drawer E2E Tests", () => {
         cy.get("th").eq(2).should("have.text", "Unit");
       });
   });
+
+  it('should expand and collapse all rows when "Expand All" switch is clicked', () => {
+    cy.get("#loadDefaultButton-MR").click();
+    cy.wait(1000);
+
+    // Should have 5 rows could be expanded
+    cy.get(".collapsed-icon").should("have.length", 5);
+
+    // Open the drawer
+    cy.get("#Appbar-menu-button").click();
+
+    // Expand all rows
+    cy.get("#Expand-switch input[type='checkbox']").click();
+    cy.wait(500);
+
+    // Should have 5 rows could be collapsed
+    cy.get(".expanded-icon").should("have.length", 5);
+
+    // Collapse all rows
+    cy.get("#Expand-switch input[type='checkbox']").click();
+    cy.wait(500);
+
+    // Should have 5 rows could be expanded
+    cy.get(".collapsed-icon").should("have.length", 5);
+  });
+
+  it('should disable "Expand All" switch when search input is not empty', () => {
+    cy.get("#loadDefaultButton-MR").click();
+    cy.wait(1000);
+
+    // Open the drawer
+    cy.get("#Appbar-menu-button").click();
+
+    // Type "Patient" in the search input
+    cy.get("#Search-input").type("Patient").wait(500);
+    cy.get("#Search-input").should("have.value", "Patient");
+
+    // Try to expand all rows
+    cy.get("#Expand-switch input[type='checkbox']").click({ force: true });
+    cy.wait(500);
+
+    // Expand switch should be disabled
+    cy.get("#Expand-switch input[type='checkbox']").should("be.disabled");
+  });
 });
