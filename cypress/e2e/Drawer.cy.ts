@@ -224,6 +224,36 @@ describe("Drawer E2E Tests", () => {
       });
   });
 
+  it("should show column switch 'At least one' warning", () => {
+    // Load a sample file first
+    cy.get("#loadDefaultButton-MR").click();
+    cy.wait(1000);
+
+    // Open the drawer
+    cy.get("#Appbar-menu-button").click();
+    cy.get("#Drawer").should("be.visible");
+
+    // Assert each component is present
+    cy.get("#Drawer").within(() => {
+      cy.get("#Search-input").should("exist");
+      cy.get("#Column-switch-Tag input[type='checkbox']")
+        .should("exist")
+        .should("be.checked")
+        .click();
+      cy.get("#Column-switch-Name input[type='checkbox']")
+        .should("exist")
+        .should("be.checked")
+        .click();
+      cy.get("#Column-switch-Values input[type='checkbox']")
+        .should("exist")
+        .should("be.checked")
+        .click()
+        .should("be.checked"); // At least one column should be checked
+    });
+    const warningMsg = "At least one column must be enabled";
+    cy.get("#Snackbar").contains(warningMsg);
+  });
+
   it('should expand and collapse all rows when "Expand All" switch is clicked', () => {
     cy.get("#loadDefaultButton-MR").click();
     cy.wait(1000);
