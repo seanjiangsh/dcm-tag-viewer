@@ -297,4 +297,86 @@ describe("Drawer E2E Tests", () => {
     // Expand switch should be disabled
     cy.get("#Expand-switch input[type='checkbox']").should("be.disabled");
   });
+
+  it('should clear file and close drawer when "Clear File" button is clicked', () => {
+    cy.get("#loadDefaultButton-MR").click();
+    cy.wait(1000);
+
+    // Open the drawer
+    cy.get("#Appbar-menu-button").click();
+    cy.get("#Drawer").should("be.visible");
+
+    // Click the clear file button
+    cy.get("#ClearFile-button").click();
+    cy.wait(500);
+
+    // Drawer should be closed
+    cy.get("#Drawer").should("not.be.visible");
+
+    // Check the Redux store
+    cy.window()
+      .its("store")
+      .invoke("getState")
+      .then((state) => {
+        const { file } = state.layout;
+        expect(file).to.not.have.property("data");
+        expect(file).to.have.property("isSR", false);
+      });
+
+    // Check the FileDrop component is visible
+    cy.get("#FileDrop").should("be.visible");
+  });
+
+  it('should render proper dialog when "About" button is clicked', () => {
+    // Open the drawer first
+    cy.get("#Appbar-menu-button").click();
+    cy.get("#Drawer").should("be.visible");
+
+    // Click the About button
+    cy.get("#Drawer").within(() => {
+      cy.get("#About-button").click();
+    });
+
+    // Dialog should be visible
+    cy.get("#About").should("be.visible");
+
+    // Dialog should contain proper content
+    cy.get("#About").within(() => {
+      cy.get("h2").should("have.text", "About");
+      cy.get("p")
+        .eq(0)
+        .should(
+          "have.text",
+          "Thank you for using the DICOM Tag Viewer, which supports viewing tags and structured reports (SR). Rest assured, all data is processed locally in your browser, and no data is uploaded to any server."
+        );
+      cy.get("p")
+        .eq(1)
+        .should(
+          "have.text",
+          "This project is open-source. You can view the source code on GitHub and visit my portfolio website."
+        );
+      cy.get("a")
+        .eq(0)
+        .should("have.text", "source code")
+        .should(
+          "have.attr",
+          "href",
+          "https://github.com/seanjiangsh/dcm-tag-viewer"
+        );
+      cy.get("a")
+        .eq(1)
+        .should("have.text", "my portfolio")
+        .should("have.attr", "href", "https://sean-j.dev");
+    });
+
+    // Close the dialog and drawer on click away
+    cy.get("body").click(0, 0);
+    cy.wait(500);
+
+    // Dialog should be closed
+    cy.get("#About").should("not.exist");
+
+    // Drawer should be closed
+    cy.get("#Drawer").should("not.be.visible");
+  });
 });
