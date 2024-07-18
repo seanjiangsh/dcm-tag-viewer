@@ -39,7 +39,7 @@ const DECODE_LABEL: { [key: string]: string } = {
   GBK: "gbk",
 };
 
-const getLangLabel = () => {
+export const getLangLabel = () => {
   const locale = navigator.language;
   switch (locale) {
     case "zh-TW":
