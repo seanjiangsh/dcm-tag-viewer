@@ -53,7 +53,7 @@ export const getLangLabel = () => {
   }
 };
 
-const splitPN = (buffer: Uint8Array): Array<Uint8Array> => {
+export const splitPN = (buffer: Uint8Array): Array<Uint8Array> => {
   let tmp: Array<number> = [];
   let result: Array<Uint8Array> = [];
   const { length } = buffer;
