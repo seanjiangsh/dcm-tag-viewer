@@ -61,4 +61,22 @@ describe("decoder utility tests", () => {
     expect(result[1]).to.deep.equal(result1);
     expect(result[2]).to.deep.equal(result2);
   });
+
+  it("should clean the string", () => {
+    expect(decoder.cleanString("test\u0000")).eq("test");
+    expect(decoder.cleanString("test\u200B")).eq("test");
+  });
+
+  it("should convert the buffer to a hex string", () => {
+    const buffer = new Uint8Array([0x01, 0x02, 0x03, 0x04, 0x05]);
+    const result = decoder.toHexString(buffer);
+    expect(result).eq("01 02 03 04 05");
+  });
+
+  it("should clear string escape", () => {
+    const testStr = "\x1B)Iﾔﾏﾀﾞ\x1B(B^\x1B)Iﾀﾛｳ\x1B(B";
+    const clearedStr = "ﾔﾏﾀﾞ^ﾀﾛｳ";
+    const result = decoder.clearStringEscape(testStr);
+    expect(result).eq(clearedStr);
+  });
 });

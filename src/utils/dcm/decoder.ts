@@ -71,24 +71,25 @@ export const splitPN = (buffer: Uint8Array): Array<Uint8Array> => {
   return result;
 };
 
-const cleanString = (str: string) => {
+export const cleanString = (str: string) => {
   // * trim spaces
   str = str.trim();
 
   // * get rid of tailing null or ending zero-width space
   const lastCharCode = str.charCodeAt(str.length - 1);
-  if (lastCharCode === 0 || lastCharCode === 8203)
+  if (lastCharCode === 0 || lastCharCode === 8203) {
     str = str.substring(0, str.length - 1);
+  }
 
   return str;
 };
 
-const toHexString = (buffer: Uint8Array) =>
+export const toHexString = (buffer: Uint8Array) =>
   Array.from(buffer)
     .map((b) => b.toString(16).padStart(2, "0"))
     .join(" ");
 
-const clearStringEscape = (str: string) => {
+export const clearStringEscape = (str: string) => {
   const buffer = new TextEncoder().encode(str);
   // console.log("clearStringEscape", toHexString(buffer));
   const { length } = buffer;
