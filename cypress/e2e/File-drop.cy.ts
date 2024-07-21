@@ -66,4 +66,26 @@ describe("File drop e2e tests", () => {
       "Failed to parse the file. Please check if it is a DICOM file.";
     cy.get("#Snackbar").contains(failedMsg);
   });
+
+  it("renders Japanese characters properly when SpecificCharacterSet was incorrect", () => {
+    cy.fixture("ja-garbled.dcm", "binary").then((fileContent) => {
+      cy.get("#FileDrop").attachFile(
+        {
+          fileContent,
+          fileName: "ja-garbled.dcm",
+          mimeType: "application/dicom",
+          encoding: "binary",
+        },
+        { subjectType: "drag-n-drop" }
+      );
+      cy.wait(1000);
+    });
+
+    cy.get("#TagTable")
+      .contains("(0008,0090)")
+      .closest("tr")
+      .within(() => {
+        cy.get("td").eq(2).contains("ﾔﾏﾀﾞ^ﾀﾛｳ, 山田^太郎");
+      });
+  });
 });
