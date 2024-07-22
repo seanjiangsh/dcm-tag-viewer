@@ -42,7 +42,7 @@ const getTagElement = (tag: string) => tag.slice(5, 9);
 const getTagWithParentheses = (tag: string) =>
   `(${getTagGroup(tag)},${getTagElement(tag)})`.toUpperCase();
 
-const getVR = (element: Element) => {
+export const getVR = (element: Element) => {
   const { tag, vr } = element;
   const tagWithParentheses = getTagWithParentheses(tag);
   const VR = vr || TAG_DICT[tagWithParentheses]?.vr || "UN";
@@ -61,7 +61,7 @@ const getSQValues = (items: Array<Element>) => {
   return items.map(getSQValue);
 };
 
-const getSQValue = (item: Element) => {
+export const getSQValue = (item: Element) => {
   const { dataSet } = item;
   if (!dataSet) return {};
   return getElements(dataSet, Object.values(dataSet.elements));
@@ -71,7 +71,6 @@ const getValue = (dataset: DataSet, element: Element) => {
   const { tag } = element;
   const vr = getVR(element);
   const vm = getVM(dataset, element);
-  const buffer = dataset.byteArray;
 
   switch (vr) {
     case "AT":
