@@ -67,7 +67,7 @@ export const getSQValue = (item: Element) => {
   return getElements(dataSet, Object.values(dataSet.elements));
 };
 
-const getValue = (dataset: DataSet, element: Element) => {
+export const getValue = (dataset: DataSet, element: Element) => {
   const { tag } = element;
   const vr = getVR(element);
   const vm = getVM(dataset, element);
