@@ -1,11 +1,9 @@
 import { Backdrop, Alert, Button } from "@mui/material";
 
-import * as CommonTypes from "@redux/common.types";
-
 // ! Note: CANNOT use Redux selector in this component
 export default function AlertWthBtn(props: { text: string }) {
   return (
-    <Backdrop open={true} transitionDuration={0}>
+    <Backdrop id="Alert-with-button" open={true} transitionDuration={0}>
       <Alert
         severity="error"
         action={
