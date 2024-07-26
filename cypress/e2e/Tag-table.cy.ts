@@ -3,7 +3,7 @@ describe("Tag table e2e tests", () => {
     cy.visit("/");
   });
 
-  it("renders proper SRTable elements", () => {
+  it("renders proper Tag-Table elements", () => {
     cy.fixture("MR.dcm", "binary").then((fileContent) => {
       cy.get("#FileDrop").attachFile(
         {
@@ -21,5 +21,11 @@ describe("Tag table e2e tests", () => {
     cy.get("#TagTable").contains("Tag");
     cy.get("#TagTable").contains("Name");
     cy.get("#TagTable").contains("Values");
+  });
+
+  it("double click the first row", () => {
+    cy.get("#loadDefaultButton-MR").click();
+    cy.wait(1000);
+    cy.get("#TagTable").find("tbody tr").first().dblclick;
   });
 });
