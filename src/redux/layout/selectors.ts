@@ -2,16 +2,13 @@ import { createSelector } from "@reduxjs/toolkit";
 import { RootState } from "@redux/root-store";
 
 const selectLayout = (state: RootState) => state.layout;
+const selectFile = (state: RootState) => state.layout.file;
 
-export const selectFileData = createSelector(
-  selectLayout,
-  (layout) => layout.file.data
-);
+export const selectFileData = createSelector(selectFile, (file) => file.data);
 
-export const selectIsSR = createSelector(
-  selectLayout,
-  (layout) => layout.file.isSR
-);
+export const selectImageId = createSelector(selectFile, (file) => file.imageId);
+
+export const selectIsSR = createSelector(selectFile, (file) => file.isSR);
 
 export const selectShowSR = createSelector(
   selectLayout,

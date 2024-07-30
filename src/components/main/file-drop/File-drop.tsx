@@ -7,6 +7,7 @@ import {
   useState,
 } from "react";
 import { Box, Button, Typography } from "@mui/material";
+import csWADOImageLoader from "cornerstone-wado-image-loader";
 
 import { useDispatch, useSelector } from "@redux/root-hook";
 import { selectFileData } from "@redux/layout/selectors";
@@ -16,8 +17,14 @@ import * as dcmParser from "@utils/dcm/parser";
 
 import tableUtils from "@components/tree-table/utils";
 
-const { resetLayoutState, setFileData, setIsSR, setShowSR, setSnackbar } =
-  layoutActions;
+const {
+  resetLayoutState,
+  setFileData,
+  setImageId,
+  setIsSR,
+  setShowSR,
+  setSnackbar,
+} = layoutActions;
 
 const BoxStyle = (onTop: boolean) => ({
   position: "absolute",
@@ -46,9 +53,9 @@ export default function FileDrop(props: FileDropProps) {
   const onTop = !fileData || dragging;
   const showLoadSampleElems = !dragging && !fileData && !loadFileDelay;
 
-  const parseAndSetFileData = async (data: File | Response) => {
+  const parseAndSetFileData = async (file: File) => {
     if (fileData) dispatch(resetLayoutState());
-    const arrayBuffer = await data.arrayBuffer();
+    const arrayBuffer = await file.arrayBuffer();
     const buffer = new Uint8Array(arrayBuffer);
     const dataset = await dcmParser.parseDcm(buffer);
     if (!dataset) {
@@ -58,11 +65,15 @@ export default function FileDrop(props: FileDropProps) {
       return;
     }
 
+    const imageId = csWADOImageLoader.wadouri.fileManager.add(file);
     const dcmJson = dcmParser.getJson(dataset);
     const isSR = tableUtils.isSR(dcmJson);
-    // console.log(dcmJson);
+
+    // console.log({ imageId, dcmJson });
 
     dispatch(setFileData(dcmJson));
+    dispatch(setImageId(imageId));
+
     if (isSR) {
       dispatch(setIsSR(isSR));
       dispatch(setShowSR(true));
@@ -83,7 +94,9 @@ export default function FileDrop(props: FileDropProps) {
     const id = e.currentTarget.id;
     const type = id.split("-")[1];
     const response = await fetch(`/samples/${type}.dcm`);
-    parseAndSetFileData(response);
+    const blob = await response.blob();
+    const file = new File([blob], `${type}.dcm`, { type: blob.type });
+    parseAndSetFileData(file);
   };
 
   const loadSampleElems = (

@@ -27,6 +27,12 @@ const setFileData = (
 ) => {
   state.file.data = action.payload;
 };
+const setImageId = (
+  state: LayoutTypes.LayoutState,
+  action: PayloadAction<string>
+) => {
+  state.file.imageId = action.payload;
+};
 const setIsSR = (
   state: LayoutTypes.LayoutState,
   action: PayloadAction<boolean>
@@ -87,6 +93,7 @@ const layoutSlice = createSlice({
     resetLayoutState,
     setScreenSize,
     setFileData,
+    setImageId,
     setIsSR,
     setShowSR,
     setDrawerOpened,
