@@ -11,6 +11,7 @@ export const initLayoutState: LayoutTypes.LayoutState = {
   showSR: false,
   enabledColumns: [],
   expandAll: false,
+  imageViewDialog: { opened: false },
   drawer: { opened: false, filter: "", columns: [] },
   snackbar: { opened: false, level: "info", msg: "" },
 };

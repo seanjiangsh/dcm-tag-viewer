@@ -30,6 +30,11 @@ export const selectExpandAll = createSelector(
   (layout) => layout.expandAll
 );
 
+export const selectImageViewDialog = createSelector(
+  selectLayout,
+  (layout) => layout.imageViewDialog
+);
+
 export const selectSnackbar = createSelector(
   selectLayout,
   (layout) => layout.snackbar

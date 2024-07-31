@@ -75,6 +75,12 @@ const setExpandAll = (
 ) => {
   state.expandAll = action.payload;
 };
+const setImageViewDialogOpened = (
+  state: LayoutTypes.LayoutState,
+  action: PayloadAction<boolean>
+) => {
+  state.imageViewDialog.opened = action.payload;
+};
 const setSnackbar = (
   state: LayoutTypes.LayoutState,
   action: PayloadAction<{ level: string; msg: string }>
@@ -101,6 +107,7 @@ const layoutSlice = createSlice({
     setDrawerColumns,
     setEnabledColumns,
     setExpandAll,
+    setImageViewDialogOpened,
     setSnackbar,
     clearSnackbar,
   },

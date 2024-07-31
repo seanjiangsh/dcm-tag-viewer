@@ -17,7 +17,8 @@ import SearchInput from "./Search-input";
 import SRSwitch from "./SR-switch";
 import ColumnSwitches from "./Column-switches";
 import ExpandSwitch from "./Expand-switch";
-import ClearFileButton from "./ClearFileButton";
+import ImageViewButton from "./Image-view-button";
+import ClearFileButton from "./Clear-file-button";
 import About from "./About";
 
 const { setDrawerOpened } = layoutActions;
@@ -49,6 +50,7 @@ export default function Drawer() {
         <SRSwitch />
         <ColumnSwitches />
         <ExpandSwitch />
+        <ImageViewButton />
         <ClearFileButton />
         <About />
       </List>

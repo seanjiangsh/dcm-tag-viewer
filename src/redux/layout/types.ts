@@ -9,6 +9,7 @@ export type LayoutState = {
   drawer: Drawer;
   enabledColumns: Array<string>;
   expandAll: boolean;
+  imageViewDialog: { opened: boolean };
   snackbar: { opened: boolean; level: string; msg: string };
 };
 

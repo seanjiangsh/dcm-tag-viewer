@@ -1,6 +1,7 @@
 import Appbar from "@components/app-bar/Appbar";
 import Main from "@components/main/Main";
 import Drawer from "@components/drawer/Drawer";
+import ImageViewDialog from "@components/image-view-dialog/Image-view-dialog";
 import Snackbar from "@components/snackbar/Snackbar";
 
 const ContainerStyle = {
@@ -16,6 +17,7 @@ export default function App() {
       <Appbar />
       <Main />
       <Drawer />
+      <ImageViewDialog />
       <Snackbar />
     </div>
   );
