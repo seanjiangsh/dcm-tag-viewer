@@ -25,6 +25,7 @@ export default function AppBar() {
     <MuiAppBar id="Appbar" position="static" sx={AppBarStyle}>
       <Toolbar sx={AppBarStyle}>
         <IconButton
+          aria-hidden={true}
           size="large"
           edge="start"
           color="inherit"
