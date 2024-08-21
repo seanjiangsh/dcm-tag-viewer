@@ -19,9 +19,11 @@ export const getJson = (dataset: DataSet) => {
 
 const getElements = (dataset: DataSet, elements: Array<Element>) => {
   const elems = Object.values(elements).reduce<DcmJsonModelObj>((p, c) => {
-    // * skip meta elements and sequence delimiters
     const { tag } = c;
-    if (tag.startsWith("x0002") || tag === "xfffee00d") return p;
+    // * skip sequence delimiters
+    if (tag === "xfffee00d") return p;
+    // * skip meta elements and sequence delimiters
+    // if (tag.startsWith("x0002") || tag === "xfffee00d") return p;
     return { ...p, ...getElement(dataset, c) };
   }, {});
   return elems;

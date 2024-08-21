@@ -53,7 +53,10 @@ export const getTagData = (
   json: dcmTypes.DcmJsonModelObj,
   parentPath?: string
 ): Array<types.Data> => {
-  const sortedKeys = Object.keys(json).sort();
+  // * skip meta elements
+  const sortedKeys = Object.keys(json)
+    .filter((k) => !k.startsWith("0002"))
+    .sort();
   return sortedKeys.map<types.Data>((tag) => {
     const val = json[tag];
     const dcmVals = getDcmVals(tag, val);
