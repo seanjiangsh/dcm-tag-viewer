@@ -8,19 +8,6 @@ import {
 import * as types from "../types";
 
 const srInitExpands = new Set<string>();
-export const isSR = (json: DcmJsonModelObj) => {
-  const modalityPath = "$['00080060'].Value[0]";
-  const modality = JSONPath({ json, path: modalityPath })[0];
-  return modality === "SR";
-  // const modalityPath = "00080060.Value[0]";
-  // const modality = JSONPath({ json, path: modalityPath })[0];
-  // const cmPath = "0040A043.Value[0].00080104.Value[0]";
-  // const codeMeaning = JSONPath({ json, path: cmPath })[0];
-  // const vtPath = "0040A040.Value[0]";
-  // const valueType = JSONPath({ json, path: vtPath })[0];
-  // // console.log(modality, codeMeaning, valueType);
-  // return modality === "SR" && codeMeaning && valueType;
-};
 
 export const getSRInitExpands = (): Record<string, boolean> => {
   const ids = Array.from(srInitExpands);

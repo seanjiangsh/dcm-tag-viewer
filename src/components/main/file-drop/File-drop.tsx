@@ -14,14 +14,13 @@ import { selectFileData } from "@redux/layout/selectors";
 import { layoutActions } from "@redux/layout/reducer";
 
 import * as dcmParser from "@utils/dcm/parser";
-
-import tableUtils from "@components/tree-table/utils";
+import { getImageType } from "@utils/dcm/image-type";
 
 const {
   resetLayoutState,
   setFileData,
   setImageId,
-  setIsSR,
+  setImageType,
   setShowSR,
   setSnackbar,
 } = layoutActions;
@@ -67,17 +66,15 @@ export default function FileDrop(props: FileDropProps) {
 
     const imageId = csWADOImageLoader.wadouri.fileManager.add(file);
     const dcmJson = dcmParser.getJson(dataset);
-    const isSR = tableUtils.isSR(dcmJson);
+    const imageType = getImageType(dcmJson);
 
     // console.log({ imageId, dcmJson });
 
     dispatch(setFileData(dcmJson));
     dispatch(setImageId(imageId));
+    dispatch(setImageType(imageType));
 
-    if (isSR) {
-      dispatch(setIsSR(isSR));
-      dispatch(setShowSR(true));
-    }
+    if (imageType === "SR") dispatch(setShowSR(true));
   };
 
   const fileDrop: DragEventHandler<HTMLDivElement> = async (e) => {

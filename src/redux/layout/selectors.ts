@@ -8,7 +8,10 @@ export const selectFileData = createSelector(selectFile, (file) => file.data);
 
 export const selectImageId = createSelector(selectFile, (file) => file.imageId);
 
-export const selectIsSR = createSelector(selectFile, (file) => file.isSR);
+export const selectImageType = createSelector(
+  selectFile,
+  (file) => file.imageType
+);
 
 export const selectShowSR = createSelector(
   selectLayout,

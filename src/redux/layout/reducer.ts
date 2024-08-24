@@ -6,6 +6,7 @@ import { RootState } from "@redux/root-store";
 import * as LayoutTypes from "./types";
 
 import { initLayoutState } from "./default.state";
+import { ImageTypes } from "@utils/dcm/image-type";
 
 const resetLayoutState = () => initLayoutState;
 const setScreenSize = (
@@ -33,11 +34,11 @@ const setImageId = (
 ) => {
   state.file.imageId = action.payload;
 };
-const setIsSR = (
+const setImageType = (
   state: LayoutTypes.LayoutState,
-  action: PayloadAction<boolean>
+  action: PayloadAction<ImageTypes>
 ) => {
-  state.file.isSR = action.payload;
+  state.file.imageType = action.payload;
 };
 const setShowSR = (
   state: LayoutTypes.LayoutState,
@@ -100,7 +101,7 @@ const layoutSlice = createSlice({
     setScreenSize,
     setFileData,
     setImageId,
-    setIsSR,
+    setImageType,
     setShowSR,
     setDrawerOpened,
     setDrawerFilter,

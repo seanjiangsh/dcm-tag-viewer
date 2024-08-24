@@ -7,7 +7,7 @@ export const defaultScreenSize: LayoutTypes.ScreenSize = {
 
 export const initLayoutState: LayoutTypes.LayoutState = {
   screenSize: defaultScreenSize,
-  file: { isSR: false },
+  file: {},
   showSR: false,
   enabledColumns: [],
   expandAll: false,

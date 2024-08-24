@@ -32,7 +32,7 @@ export type Responsive = {
 export type File = {
   data?: DcmJsonModelObj;
   imageId?: string;
-  isSR: boolean;
+  imageType?: string;
 };
 
 export type Drawer = {
