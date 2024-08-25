@@ -1,6 +1,7 @@
 import { initLayoutState } from "../default.state";
 import * as LayoutTypes from "../types";
 import { layoutReducer, layoutActions } from "../reducer";
+import { ImageTypes } from "@utils/dcm/image-type";
 
 describe("layout reducer tests", () => {
   it("should set the screen size", () => {
@@ -26,11 +27,21 @@ describe("layout reducer tests", () => {
     expect(newState.file.data).to.deep.eq(mockData);
   });
 
-  it("should set the file is SR flag", () => {
-    const isSR = true;
-    const action = layoutActions.setIsSR(isSR);
-    const newState = layoutReducer(initLayoutState, action);
-    expect(newState.file.isSR).to.deep.eq(isSR);
+  it("should set the image type properly", () => {
+    let imageType = "default" as ImageTypes;
+    let action = layoutActions.setImageType(imageType);
+    let newState = layoutReducer(initLayoutState, action);
+    expect(newState.file.imageType).to.deep.eq(imageType);
+
+    imageType = "SR" as ImageTypes;
+    action = layoutActions.setImageType(imageType);
+    newState = layoutReducer(initLayoutState, action);
+    expect(newState.file.imageType).to.deep.eq(imageType);
+
+    imageType = "PDF" as ImageTypes;
+    action = layoutActions.setImageType(imageType);
+    newState = layoutReducer(initLayoutState, action);
+    expect(newState.file.imageType).to.deep.eq(imageType);
   });
 
   it("should set the show SR flag", () => {

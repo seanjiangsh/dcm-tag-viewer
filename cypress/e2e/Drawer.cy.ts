@@ -319,8 +319,7 @@ describe("Drawer E2E Tests", () => {
       .invoke("getState")
       .then((state) => {
         const { file } = state.layout;
-        expect(file).to.not.have.property("data");
-        expect(file).to.have.property("isSR", false);
+        expect(file).eql({});
       });
 
     // Check the FileDrop component is visible

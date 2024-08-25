@@ -1,6 +1,7 @@
 import * as CommonTypes from "@redux/common.types";
 
 import { DcmJsonModelObj } from "@utils/dcm/dcmTypes";
+import { ImageTypes } from "@utils/dcm/image-type";
 
 export type LayoutState = {
   screenSize: ScreenSize;
@@ -32,7 +33,7 @@ export type Responsive = {
 export type File = {
   data?: DcmJsonModelObj;
   imageId?: string;
-  imageType?: string;
+  imageType?: ImageTypes;
 };
 
 export type Drawer = {
