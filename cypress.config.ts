@@ -1,11 +1,13 @@
 import { defineConfig } from "cypress";
 import cypressCoverageTask from "@cypress/code-coverage/task";
+import { configureVisualRegression } from "cypress-visual-regression/dist/plugin";
 
 const setupNodeEvents = (
   on: Cypress.PluginEvents,
   config: Cypress.PluginConfigOptions
 ) => {
   cypressCoverageTask(on, config);
+  configureVisualRegression(on);
   return config;
 };
 

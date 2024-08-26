@@ -3,7 +3,12 @@
     "jsx": "react-jsx",
     "target": "es5",
     "lib": ["es5", "dom"],
-    "types": ["node", "cypress", "cypress-file-upload"]
+    "types": [
+      "node",
+      "cypress",
+      "cypress-file-upload",
+      "cypress-visual-regression"
+    ]
   },
   "include": ["**/*.ts", "support/component.tsx"]
 }

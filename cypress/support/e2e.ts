@@ -16,6 +16,9 @@
 // Import commands.js using ES2015 syntax:
 import "./commands";
 import "@cypress/code-coverage/support";
+import { addCompareSnapshotCommand } from "cypress-visual-regression/dist/command";
+
+addCompareSnapshotCommand();
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
