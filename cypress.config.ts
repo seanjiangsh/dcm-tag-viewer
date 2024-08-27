@@ -22,5 +22,10 @@ export default defineConfig({
   e2e: {
     baseUrl: "http://localhost:5173",
     setupNodeEvents,
+    env: {
+      visualRegressionType: "regression",
+      visualRegressionBaseDirectory: "cypress/snapshot/base",
+      visualRegressionDiffDirectory: "cypress/snapshot/diff",
+    },
   },
 });

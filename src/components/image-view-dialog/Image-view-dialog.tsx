@@ -32,7 +32,12 @@ export default function ImageViewDialog() {
   const close = () => dispatch(setImageViewDialogOpened(false));
 
   return (
-    <Dialog id="ImageViewDialog" maxWidth={false} onClose={close} open={opened}>
+    <Dialog
+      id="Image-view-dialog"
+      maxWidth={false}
+      onClose={close}
+      open={opened}
+    >
       <DialogTitle sx={{ m: 0, p: 2 }}>Image View</DialogTitle>
       <IconButton aria-hidden={true} onClick={close} sx={CloseButtonStyles}>
         <Close />

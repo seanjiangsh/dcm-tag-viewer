@@ -10,5 +10,11 @@
       "cypress-visual-regression"
     ]
   },
+  "ts-node": {
+    "transpileOnly": true,
+    "compilerOptions": {
+      "module": "ES2015"
+    }
+  },
   "include": ["**/*.ts", "support/component.tsx"]
 }
