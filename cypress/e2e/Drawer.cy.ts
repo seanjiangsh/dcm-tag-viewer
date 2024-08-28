@@ -378,4 +378,30 @@ describe("Drawer E2E Tests", () => {
     // Drawer should be closed
     cy.get("#Drawer").should("not.be.visible");
   });
+
+  it("should show ImageViewButton when MR file is loaded", () => {
+    // Load a sample file first
+    cy.get("#loadDefaultButton-MR").click();
+    cy.wait(1000);
+
+    // Open the drawer
+    cy.get("#Appbar-menu-button").click();
+    cy.get("#Drawer").should("be.visible");
+
+    // ImageViewButton should be visible
+    cy.get("#Image-view-dialog-button").should("exist");
+  });
+
+  it("should NOT show ImageViewButton when SR file is loaded", () => {
+    // Load a sample file first
+    cy.get("#loadDefaultButton-SR").click();
+    cy.wait(1000);
+
+    // Open the drawer
+    cy.get("#Appbar-menu-button").click();
+    cy.get("#Drawer").should("be.visible");
+
+    // ImageViewButton should NOT be visible
+    cy.get("#Image-view-dialog-button").should("not.exist");
+  });
 });
