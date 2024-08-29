@@ -40,3 +40,14 @@ export const initCornerstone = () => {
   csWebImageLoader.external.cornerstone = cs;
   // console.log(cs, csWADOImageLoader, csMath, csTools);
 };
+
+export const enableOverlayTools = (csDiv: HTMLDivElement) => {
+  const tools = ["Overlay", "ScaleOverlay"];
+  tools.forEach((toolName) => enableTool(csDiv, toolName));
+};
+
+export const enableTool = (csDiv: HTMLDivElement, toolName: string) => {
+  const tool = csTools[`${toolName}Tool`];
+  csTools.addToolForElement(csDiv, tool);
+  csTools.setToolEnabled(toolName);
+};

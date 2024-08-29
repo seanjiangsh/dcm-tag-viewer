@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import cs from "cornerstone-core";
 
-import { initCornerstone } from "@utils/cornerstone";
+import { enableOverlayTools, initCornerstone } from "@utils/cornerstone";
 
 type CSImageDisplayProps = { imageId?: string };
 
@@ -28,7 +28,11 @@ const initAndDisplayImage = async (imageId: string, csDiv: HTMLDivElement) => {
 
   // * load image
   const image = await cs.loadAndCacheImage(imageId);
+
   // * display image
   cs.enable(csDiv);
   cs.displayImage(csDiv, image);
+
+  // * enable overlay tools
+  enableOverlayTools(csDiv);
 };
