@@ -26,5 +26,6 @@ dev
 
 # testing
 cypress/screenshots
+cypress/snapshot/diff
 coverage
 .nyc_output
