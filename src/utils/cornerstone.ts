@@ -51,3 +51,20 @@ export const enableTool = (csDiv: HTMLDivElement, toolName: string) => {
   csTools.addToolForElement(csDiv, tool);
   csTools.setToolEnabled(toolName);
 };
+
+export const initAndDisplayImage = async (
+  imageId: string,
+  csDiv: HTMLDivElement
+) => {
+  initCornerstone();
+
+  // * load image
+  const image = await cs.loadAndCacheImage(imageId);
+
+  // * display image
+  cs.enable(csDiv);
+  cs.displayImage(csDiv, image);
+
+  // * enable overlay tools
+  enableOverlayTools(csDiv);
+};

@@ -7,6 +7,7 @@ import {
   useState,
 } from "react";
 import { Box, Button, Typography } from "@mui/material";
+import cs from "cornerstone-core";
 import csWADOImageLoader from "cornerstone-wado-image-loader";
 
 import { useDispatch, useSelector } from "@redux/root-hook";
@@ -15,6 +16,7 @@ import { layoutActions } from "@redux/layout/reducer";
 
 import * as dcmParser from "@utils/dcm/parser";
 import { getImageType } from "@utils/dcm/image-type";
+import { initCornerstone } from "@utils/cornerstone";
 
 const {
   resetLayoutState,
@@ -64,11 +66,13 @@ export default function FileDrop(props: FileDropProps) {
       return;
     }
 
-    const imageId = csWADOImageLoader.wadouri.fileManager.add(file);
+    const { fileManager } = csWADOImageLoader.wadouri;
+    fileManager.purge();
+    const imageId: string = fileManager.add(file);
+
     const dcmJson = dcmParser.getJson(dataset);
     const imageType = getImageType(dcmJson);
-
-    // console.log({ imageId, dcmJson });
+    // console.log({ imageId, dcmJson, imageType });
 
     dispatch(setFileData(dcmJson));
     dispatch(setImageId(imageId));
@@ -124,6 +128,14 @@ export default function FileDrop(props: FileDropProps) {
           onClick={loadDefaultFile}
         >
           Structured Report (SR)
+        </Button>
+        <Button
+          fullWidth
+          variant="contained"
+          id="loadDefaultButton-DICOMPDF"
+          onClick={loadDefaultFile}
+        >
+          DICOM PDF
         </Button>
       </Box>
     </Fragment>
