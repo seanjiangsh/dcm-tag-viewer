@@ -22,23 +22,11 @@ const setScreenSize = (
     screenSize.windowSize = newWindowSize;
   }
 };
-const setFileData = (
+const setFile = (
   state: LayoutTypes.LayoutState,
-  action: PayloadAction<LayoutTypes.File["data"]>
+  action: PayloadAction<LayoutTypes.File>
 ) => {
-  state.file.data = action.payload;
-};
-const setImageId = (
-  state: LayoutTypes.LayoutState,
-  action: PayloadAction<string>
-) => {
-  state.file.imageId = action.payload;
-};
-const setImageType = (
-  state: LayoutTypes.LayoutState,
-  action: PayloadAction<ImageTypes>
-) => {
-  state.file.imageType = action.payload;
+  state.file = action.payload;
 };
 const setShowSR = (
   state: LayoutTypes.LayoutState,
@@ -99,9 +87,7 @@ const layoutSlice = createSlice({
   reducers: {
     resetLayoutState,
     setScreenSize,
-    setFileData,
-    setImageId,
-    setImageType,
+    setFile,
     setShowSR,
     setDrawerOpened,
     setDrawerFilter,

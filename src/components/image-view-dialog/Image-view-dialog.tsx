@@ -39,7 +39,7 @@ export default function ImageViewDialog() {
 
   const displayElement = () => {
     if (!imageId) return null;
-    console.log({ imageType, imageId });
+    // console.log({ imageType, imageId });
     switch (imageType) {
       case "SR":
         return null;

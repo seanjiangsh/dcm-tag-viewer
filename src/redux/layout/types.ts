@@ -1,11 +1,12 @@
-import * as CommonTypes from "@redux/common.types";
+import { DataSet } from "dicom-parser";
 
+import * as CommonTypes from "@redux/common.types";
 import { DcmJsonModelObj } from "@utils/dcm/dcmTypes";
 import { ImageTypes } from "@utils/dcm/image-type";
 
 export type LayoutState = {
   screenSize: ScreenSize;
-  file: File;
+  file?: File;
   showSR: boolean;
   drawer: Drawer;
   enabledColumns: Array<string>;
@@ -31,9 +32,10 @@ export type Responsive = {
 };
 
 export type File = {
-  data?: DcmJsonModelObj;
-  imageId?: string;
-  imageType?: ImageTypes;
+  dcmJson: DcmJsonModelObj;
+  dataset: DataSet;
+  imageId: string;
+  imageType: ImageTypes;
 };
 
 export type Drawer = {

@@ -3,14 +3,14 @@ import { ListItem, TextField } from "@mui/material";
 import { debounce } from "throttle-debounce";
 
 import { useDispatch, useSelector } from "@redux/root-hook";
-import { selectDrawer, selectFileData } from "@redux/layout/selectors";
+import { selectDrawer, selectFile } from "@redux/layout/selectors";
 import { layoutActions } from "@redux/layout/reducer";
 
 const { setDrawerFilter, setExpandAll } = layoutActions;
 
 export default function SearchInput() {
   const dispatch = useDispatch();
-  const fileData = useSelector(selectFileData);
+  const file = useSelector(selectFile);
   const { opened } = useSelector(selectDrawer);
 
   const [search, setSearch] = useState("");
@@ -41,11 +41,11 @@ export default function SearchInput() {
 
   // * Clear search input when file data is cleared
   useEffect(() => {
-    if (!fileData) setSearch("");
-  }, [fileData]);
+    if (!file) setSearch("");
+  }, [file]);
 
   return (
-    fileData && (
+    file && (
       <ListItem>
         <TextField
           autoFocus

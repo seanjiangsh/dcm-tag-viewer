@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "@redux/root-hook";
 import {
   selectDrawer,
   selectExpandAll,
-  selectFileData,
+  selectFile,
 } from "@redux/layout/selectors";
 import { layoutActions } from "@redux/layout/reducer";
 
@@ -13,7 +13,7 @@ const { setExpandAll } = layoutActions;
 
 export default function ExpandSwitch() {
   const dispatch = useDispatch();
-  const fileData = useSelector(selectFileData);
+  const file = useSelector(selectFile);
   const expandAll = useSelector(selectExpandAll);
   const { filter } = useSelector(selectDrawer);
   const hasFilter = !!filter;
@@ -31,7 +31,7 @@ export default function ExpandSwitch() {
   );
 
   return (
-    fileData && (
+    file && (
       <ListItem id="Expand-switch">
         <ListItemIcon>{expandIcon}</ListItemIcon>
         <ListItemText primary={"Expand All"} />

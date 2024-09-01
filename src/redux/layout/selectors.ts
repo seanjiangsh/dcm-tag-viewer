@@ -2,15 +2,27 @@ import { createSelector } from "@reduxjs/toolkit";
 import { RootState } from "@redux/root-store";
 
 const selectLayout = (state: RootState) => state.layout;
-const selectFile = (state: RootState) => state.layout.file;
 
-export const selectFileData = createSelector(selectFile, (file) => file.data);
+export const selectFile = createSelector(selectLayout, (layout) => layout.file);
 
-export const selectImageId = createSelector(selectFile, (file) => file.imageId);
+export const selectDcmJson = createSelector(
+  selectFile,
+  (file) => file?.dcmJson
+);
+
+export const selectDataset = createSelector(
+  selectFile,
+  (file) => file?.dataset
+);
+
+export const selectImageId = createSelector(
+  selectFile,
+  (file) => file?.imageId
+);
 
 export const selectImageType = createSelector(
   selectFile,
-  (file) => file.imageType
+  (file) => file?.imageType
 );
 
 export const selectShowSR = createSelector(

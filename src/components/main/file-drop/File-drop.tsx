@@ -7,25 +7,16 @@ import {
   useState,
 } from "react";
 import { Box, Button, Typography } from "@mui/material";
-import cs from "cornerstone-core";
 import csWADOImageLoader from "cornerstone-wado-image-loader";
 
 import { useDispatch, useSelector } from "@redux/root-hook";
-import { selectFileData } from "@redux/layout/selectors";
+import { selectFile } from "@redux/layout/selectors";
 import { layoutActions } from "@redux/layout/reducer";
 
 import * as dcmParser from "@utils/dcm/parser";
 import { getImageType } from "@utils/dcm/image-type";
-import { initCornerstone } from "@utils/cornerstone";
 
-const {
-  resetLayoutState,
-  setFileData,
-  setImageId,
-  setImageType,
-  setShowSR,
-  setSnackbar,
-} = layoutActions;
+const { resetLayoutState, setFile, setShowSR, setSnackbar } = layoutActions;
 
 const BoxStyle = (onTop: boolean) => ({
   position: "absolute",
@@ -47,7 +38,7 @@ export default function FileDrop(props: FileDropProps) {
   const [dragging, setDragging] = dragState;
 
   const dispatch = useDispatch();
-  const fileData = useSelector(selectFileData);
+  const fileData = useSelector(selectFile);
 
   const [loadFileDelay, setLoadFileDelay] = useState(false);
 
@@ -74,9 +65,8 @@ export default function FileDrop(props: FileDropProps) {
     const imageType = getImageType(dcmJson);
     // console.log({ imageId, dcmJson, imageType });
 
-    dispatch(setFileData(dcmJson));
-    dispatch(setImageId(imageId));
-    dispatch(setImageType(imageType));
+    const newFileData = { dcmJson, dataset, imageId, imageType };
+    dispatch(setFile(newFileData));
 
     if (imageType === "SR") dispatch(setShowSR(true));
   };

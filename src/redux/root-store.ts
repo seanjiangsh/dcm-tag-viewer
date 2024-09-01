@@ -18,7 +18,7 @@ export const setupStore = (preloadedState = {}) =>
   configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().prepend(middlewares),
+      getDefaultMiddleware({ serializableCheck: false }).prepend(middlewares),
     preloadedState,
   });
 

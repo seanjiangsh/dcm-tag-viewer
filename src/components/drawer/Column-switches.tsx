@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "@redux/root-hook";
 import {
   selectDrawer,
   selectEnabledColumns,
-  selectFileData,
+  selectFile,
 } from "@redux/layout/selectors";
 import { layoutActions } from "@redux/layout/reducer";
 
@@ -13,7 +13,7 @@ const { setEnabledColumns, setSnackbar } = layoutActions;
 
 export default function ColumnSwitches() {
   const dispatch = useDispatch();
-  const fileData = useSelector(selectFileData);
+  const file = useSelector(selectFile);
   const allCols = useSelector(selectDrawer).columns;
   const enabledCols = useSelector(selectEnabledColumns);
 
@@ -41,5 +41,5 @@ export default function ColumnSwitches() {
     );
   });
 
-  return fileData && switches;
+  return file && switches;
 }

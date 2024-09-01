@@ -2,7 +2,7 @@ import { DragEventHandler, useState } from "react";
 import { Box } from "@mui/material";
 
 import { useSelector } from "@redux/root-hook";
-import { selectFileData, selectShowSR } from "@redux/layout/selectors";
+import { selectFile, selectShowSR } from "@redux/layout/selectors";
 
 import { appBarHeight } from "@utils/theme";
 
@@ -17,7 +17,7 @@ const MainStyle = {
 };
 
 export default function Main() {
-  const fileData = useSelector(selectFileData);
+  const file = useSelector(selectFile);
   const showSR = useSelector(selectShowSR);
 
   const dragState = useState(false);
@@ -42,7 +42,7 @@ export default function Main() {
   };
 
   const TableElem = showSR ? SRTable : TagTable;
-  const table = fileData ? <TableElem dcmJson={fileData} /> : null;
+  const table = file ? <TableElem dcmJson={file.dcmJson} /> : null;
 
   return (
     <Box

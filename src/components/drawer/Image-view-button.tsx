@@ -2,23 +2,17 @@ import { ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import { Preview } from "@mui/icons-material";
 
 import { useDispatch, useSelector } from "@redux/root-hook";
-import {
-  selectFileData,
-  selectImageType,
-  selectImageViewDialog,
-} from "@redux/layout/selectors";
+import { selectFile, selectImageViewDialog } from "@redux/layout/selectors";
 import { layoutActions } from "@redux/layout/reducer";
 
 const { setDrawerOpened, setImageViewDialogOpened } = layoutActions;
 
 export default function ImageViewButton() {
   const dispatch = useDispatch();
-  const fileData = useSelector(selectFileData);
+  const file = useSelector(selectFile);
   const { opened } = useSelector(selectImageViewDialog);
-  const imageType = useSelector(selectImageType);
 
-  const isSR = imageType === "SR";
-  const couldShowImage = fileData && !isSR;
+  const couldShowImage = file?.imageType !== "SR";
 
   const onClick = () => {
     dispatch(setImageViewDialogOpened(!opened));
@@ -27,11 +21,7 @@ export default function ImageViewButton() {
 
   return (
     couldShowImage && (
-      <ListItemButton
-        id="Image-view-dialog-button"
-        disabled={!fileData}
-        onClick={onClick}
-      >
+      <ListItemButton id="Image-view-dialog-button" onClick={onClick}>
         <ListItemIcon>
           <Preview fontSize="large" />
         </ListItemIcon>
