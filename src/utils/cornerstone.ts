@@ -27,7 +27,6 @@ export const initCornerstone = () => {
       },
     },
   });
-  // csTools.getModule("segmentation").configuration.segmentsPerLabelmap = 0;
   csTools.external.cornerstoneMath = csMath;
   csTools.external.cornerstone = cs;
   csTools.external.Hammer = Hammer;

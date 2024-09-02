@@ -1,17 +1,22 @@
-import React, { useEffect, useMemo, useState } from "react";
-import csWADOImageLoader from "cornerstone-wado-image-loader";
+import { useEffect, useState } from "react";
+import { DataSet } from "dicom-parser";
 
-type PDFViewerProps = {
-  imageId: string;
+import { File } from "@redux/layout/types";
+
+const styles = {
+  width: "95dvw",
+  height: "85dvh",
+  borderRadius: "10px",
 };
 
-export default function CSPDFDisplay(props: PDFViewerProps) {
-  const { imageId } = props;
+type CSPDFProps = { file: File };
+
+export default function CSPDFDisplay(props: CSPDFProps) {
+  const { dataset } = props.file;
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
 
   useEffect(() => {
-    const fawPdf = getRawPdf(imageId);
-    console.log({ imageId, fawPdf });
+    const fawPdf = getRawPdf(dataset);
     if (!fawPdf) return;
 
     const blob = new Blob([fawPdf], { type: "application/pdf" });
@@ -23,19 +28,16 @@ export default function CSPDFDisplay(props: PDFViewerProps) {
       URL.revokeObjectURL(url);
       setPdfUrl(null);
     };
-  }, [imageId]);
+  }, [dataset]);
 
-  return (
-    <div>{pdfUrl && <iframe src={pdfUrl} width="100%" height="600px" />}</div>
+  const iFrame = pdfUrl && (
+    <iframe src={pdfUrl} style={{ width: "100%", height: "100%" }} />
   );
+
+  return <div style={styles}>{iFrame}</div>;
 }
 
-const getRawPdf = (imageId: string) => {
-  const dsManager = csWADOImageLoader.wadouri.dataSetCacheManager;
-  const dataset = dsManager.get(imageId);
-  // const cachedImages = dsManager.cachedImages;
-  const loaded = dsManager.isLoaded(imageId);
-  console.log({ imageId, dsManager, dataset, loaded });
+const getRawPdf = (dataset: DataSet) => {
   const encDoc = dataset?.elements.x00420011;
   if (!encDoc) return;
   const { dataOffset, length } = encDoc;

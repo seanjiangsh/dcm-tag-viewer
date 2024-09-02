@@ -58,7 +58,6 @@ export default function FileDrop(props: FileDropProps) {
     }
 
     const { fileManager } = csWADOImageLoader.wadouri;
-    fileManager.purge();
     const imageId: string = fileManager.add(file);
 
     const dcmJson = dcmParser.getJson(dataset);
@@ -119,14 +118,16 @@ export default function FileDrop(props: FileDropProps) {
         >
           Structured Report (SR)
         </Button>
-        <Button
+
+        {/* PDF for testing */}
+        {/* <Button
           fullWidth
           variant="contained"
           id="loadDefaultButton-DICOMPDF"
           onClick={loadDefaultFile}
         >
           DICOM PDF
-        </Button>
+        </Button> */}
       </Box>
     </Fragment>
   );
