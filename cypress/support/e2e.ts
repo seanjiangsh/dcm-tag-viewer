@@ -18,7 +18,7 @@ import "./commands";
 import "@cypress/code-coverage/support";
 import { addCompareSnapshotCommand } from "cypress-visual-regression/dist/command";
 
-addCompareSnapshotCommand();
+addCompareSnapshotCommand({ overwrite: true });
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')

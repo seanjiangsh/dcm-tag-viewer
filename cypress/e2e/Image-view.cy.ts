@@ -1,5 +1,6 @@
 describe("Image view", () => {
   beforeEach(() => {
+    cy.viewport(1000, 660);
     cy.visit("/");
   });
 
@@ -17,7 +18,7 @@ describe("Image view", () => {
     cy.get("#Image-view-dialog").should("be.visible");
 
     // Check the image display
-    cy.wait(3000);
+    cy.wait(8000);
     cy.compareSnapshot("MR-image-display");
   });
 
@@ -45,7 +46,7 @@ describe("Image view", () => {
     cy.get("#Image-view-dialog").should("be.visible");
 
     // Check the image display
-    cy.wait(3000);
+    cy.wait(8000);
     cy.compareSnapshot("CT-overlay-display");
   });
 });
