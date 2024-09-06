@@ -1,6 +1,7 @@
+// ! Note: This test will fail in "cypress open" because the screenshot in head mode will not match the viewport size of 1000x660.
+
 describe("Image view", () => {
   beforeEach(() => {
-    cy.viewport(1000, 660);
     cy.visit("/");
   });
 
