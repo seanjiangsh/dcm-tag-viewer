@@ -119,15 +119,16 @@ export default function FileDrop(props: FileDropProps) {
           Structured Report (SR)
         </Button>
 
-        {/* PDF for testing */}
-        {/* <Button
-          fullWidth
-          variant="contained"
-          id="loadDefaultButton-DICOMPDF"
-          onClick={loadDefaultFile}
-        >
-          DICOM PDF
-        </Button> */}
+        {import.meta.env.DEV && (
+          <Button
+            fullWidth
+            variant="contained"
+            id="loadDefaultButton-DICOMPDF"
+            onClick={loadDefaultFile}
+          >
+            DICOM PDF
+          </Button>
+        )}
       </Box>
     </Fragment>
   );
