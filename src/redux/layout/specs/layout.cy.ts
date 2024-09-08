@@ -16,32 +16,20 @@ describe("layout reducer tests", () => {
   });
 
   it("should set the file data", () => {
-    const mockData = {
-      "00080016": {
-        vr: "UI",
-        Value: ["1.2.840.10008.5.1.4.1.1.88.33"],
+    const mockData: LayoutTypes.File = {
+      dcmJson: {
+        "00080016": {
+          vr: "UI",
+          Value: ["1.2.840.10008.5.1.4.1.1.88.33"],
+        },
       },
+      dataset: {} as any,
+      imageId: "file://testId",
+      imageType: "default",
     };
-    const action = layoutActions.setFileData(mockData);
+    const action = layoutActions.setFile(mockData);
     const newState = layoutReducer(initLayoutState, action);
-    expect(newState.file.data).to.deep.eq(mockData);
-  });
-
-  it("should set the image type properly", () => {
-    let imageType = "default" as ImageTypes;
-    let action = layoutActions.setImageType(imageType);
-    let newState = layoutReducer(initLayoutState, action);
-    expect(newState.file.imageType).to.deep.eq(imageType);
-
-    imageType = "SR" as ImageTypes;
-    action = layoutActions.setImageType(imageType);
-    newState = layoutReducer(initLayoutState, action);
-    expect(newState.file.imageType).to.deep.eq(imageType);
-
-    imageType = "PDF" as ImageTypes;
-    action = layoutActions.setImageType(imageType);
-    newState = layoutReducer(initLayoutState, action);
-    expect(newState.file.imageType).to.deep.eq(imageType);
+    expect(newState.file).to.deep.eq(mockData);
   });
 
   it("should set the show SR flag", () => {
