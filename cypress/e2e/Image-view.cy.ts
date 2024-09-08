@@ -25,7 +25,11 @@ describe("Image view", () => {
 
     // Check the image display
     cy.wait(8000);
-    cy.compareSnapshot("MR-image-display", snapshotConfig);
+    // cy.get("#CS-image-display").screenshot();
+    cy.get("#CS-image-display").compareSnapshot(
+      "MR-image-display",
+      snapshotConfig
+    );
   });
 
   it("should display CT overlay image properly", () => {
@@ -53,6 +57,10 @@ describe("Image view", () => {
 
     // Check the image display
     cy.wait(8000);
-    cy.compareSnapshot("CT-overlay-display", snapshotConfig);
+    // cy.get("#CS-image-display").screenshot();
+    cy.get("#CS-image-display").compareSnapshot(
+      "CT-overlay-display",
+      snapshotConfig
+    );
   });
 });

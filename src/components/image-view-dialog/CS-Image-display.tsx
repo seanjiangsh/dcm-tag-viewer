@@ -21,5 +21,5 @@ export default function CSImageDisplay(props: CSImageDisplayProps) {
     initAndDisplayImage(imageId, csDiv);
   }, [imageId, csDivRef]);
 
-  return <div ref={csDivRef} style={styles} />;
+  return <div id="CS-image-display" ref={csDivRef} style={styles} />;
 }
