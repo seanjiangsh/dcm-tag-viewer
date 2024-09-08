@@ -1,6 +1,6 @@
 # DICOM Tag Viewer
 
-A simple tag viewer to display DICOM info in broswer.
+A tag viewer to display DICOM info in broswer.
 
 ---
 

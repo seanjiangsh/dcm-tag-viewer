@@ -12,7 +12,7 @@ export default function ImageViewButton() {
   const file = useSelector(selectFile);
   const { opened } = useSelector(selectImageViewDialog);
 
-  const couldShowImage = file?.imageType !== "SR";
+  const couldShowImage = file && file.imageType !== "SR";
 
   const onClick = () => {
     dispatch(setImageViewDialogOpened(!opened));
