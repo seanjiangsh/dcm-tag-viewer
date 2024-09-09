@@ -346,13 +346,13 @@ describe("Drawer E2E Tests", () => {
         .eq(0)
         .should(
           "have.text",
-          "Thank you for using the DICOM Tag Viewer, which supports viewing tags and structured reports (SR). Rest assured, all data is processed locally in your browser, and no data is uploaded to any server."
+          "Hi this is Sean, the creator of this project. I'm a software engineer with a passion for medical imaging and healthcare technology. I built this project to provide a tool for viewing DICOM tags and structured reports. I hope you find this project useful. If you have any feedback or suggestions, please feel free to reach out to me. Thank you for using the DICOM Tag Viewer!"
         );
       cy.get("p")
         .eq(1)
         .should(
           "have.text",
-          "This project is open-source. You can view the source code on GitHub and visit my portfolio website."
+          "DICOM Tag Viewer process all data locally in your browser, no data is uploaded to any server. This project is open-source. You can view the source code on GitHub and visit my portfolio website."
         );
       cy.get("a")
         .eq(0)
