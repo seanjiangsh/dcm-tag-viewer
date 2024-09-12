@@ -1,6 +1,12 @@
 # DICOM Tag Viewer
 
-A tag viewer to display DICOM info in broswer.
+Got some medical images in DICOM format and want to check the information or previewing image quickly? DICOM Tag Viewer is here to help!
+
+The DICOM Tag Viewer is a user-friendly tool for displaying DICOM information in your browser. Users can simply drag-n-drop DICOM images to display tag info.
+
+Using dynamic tables, it presents nested tag data, allowing users to search, expand, and filter columns as needed. The DICOM Tag Viewer also supports the DICOM SR (Structured Report) format.
+
+All operations are performed on the frontend, guaranteeing that no sensitive data leaves the browser.
 
 ---
 
