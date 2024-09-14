@@ -51,7 +51,13 @@ All operations are performed on the frontend, guaranteeing that no sensitive dat
 ### CI/CD
 
   <div >
-    <a href="https://vitest.dev" target="_blank" rel="noreferrer"><img src="./assets/icons/vitest.svg" height="36"  alt="vitest" /></a>
-    <a href="https://github.com/features/actions" target="_blank" rel="noreferrer"><img src="./assets/icons/github-actions.svg" height="36"  alt="github-actions" /></a>
-    <a href="https://arc.codes" target="_blank" rel="noreferrer"><img src="./assets/icons/architect.svg" height="36"  alt="architect-framework" /></a>
+    <a href="https://www.cypress.io/" target="_blank" rel="noreferrer">
+      <img src="./assets/icons/cypress.svg" alt="cypress" class={imgClass} />
+    </a>
+    <a href="https://github.com/features/actions" target="_blank" rel="noreferrer">
+      <img src="./assets/icons/github-actions.svg" height="36"  alt="github-actions" />
+    </a>
+    <a href="https://arc.codes" target="_blank" rel="noreferrer">
+      <img src="./assets/icons/architect.svg" height="36"  alt="architect-framework" />
+    </a>
   </div>
